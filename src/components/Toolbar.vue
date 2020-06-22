@@ -7,8 +7,7 @@
       <!-- TITULO TOOLBAR -->
       <div class="d-flex align-center">
         <v-btn
-          href="#"
-          target="_blank"
+          :to = '{name: home}'
           text
         >
           <v-icon size="300%" class="icon-right">mdi-hospital-building</v-icon>

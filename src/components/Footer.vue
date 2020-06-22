@@ -1,21 +1,16 @@
 <template>
     <v-vue>
         <v-footer
-        absolute
+        fixed
         >
-        <v-col
-        class="text-center"
-        cols="12"
-        >
-            <v-btn 
-                text large
-                flat
-                value="nearby"
+            <v-col
+            class="text-center"
+            cols="12"
             >
-                <strong>Encuentra a todos nuestros profesionales aquí</strong>
-            </v-btn>
-
-        </v-col>
-    </v-footer>
+                <v-btn :to="{name: 'profesionales'}">
+                    <strong>Encuentra a todos nuestros profesionales aquí</strong>
+                </v-btn>
+            </v-col>
+        </v-footer>
     </v-vue>
 </template>
