@@ -1,15 +1,12 @@
 <template>
   <div id="vista-prueba">
     <div class="spacer"></div>
-    <div class="a-box"></div>
-    <Stickytop top="5" :scroll-y="scrollY"></Stickytop>
-    <div class="a-box"></div>
+    <Stickytop top="0" :scroll-y="scrollY"></Stickytop>
   </div>
 </template>
 
 <script>
 import Stickytop from '../components/Stickytop';
-//
 export default {
   components: {
     Stickytop
@@ -33,7 +30,7 @@ export default {
 }
 
 .spacer {
-  height: 45px;
+  height: 15px;
 }
 .a-box {
   display: inline-block;

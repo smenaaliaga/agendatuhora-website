@@ -21,10 +21,11 @@ import Footer from '@/components/Footer'
 Vue.component("footer", Footer);
 
 new Vue({
+  el: "#app",
   vuetify,
   store,
   router,
   components: { App },
   template: '<App />',
   render: h => h(App)
-}).$mount('#app')
+});

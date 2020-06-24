@@ -1,5 +1,34 @@
 <template>
-    <div class="a-box" :style="myStyle"></div>
+
+<v-container>
+    <v-row>
+        <v-col cols="1" />
+        <v-col cols="7">
+            <v-text-field
+                solo
+                rounded
+                placeholder="Busca tu profesional o especialidad"
+                outlined
+                :style="myStyle"
+            ></v-text-field>
+        </v-col>
+        <v-col cols="3">
+            <v-btn rounded 
+                href="#"
+                color="green accent-4"
+                dark
+                x-large
+                :elevation="5"
+                :style="myStyle"
+            > 
+                <v-icon class="icon-right">mdi-magnify</v-icon>
+                <span class="mr-2">Buscar</span>
+            </v-btn>
+        </v-col>
+        <v-col cols="1" />   
+    </v-row>
+</v-container>
+
 </template>
 
 <script>

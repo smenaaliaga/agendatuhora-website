@@ -6,14 +6,12 @@
 
       <!-- TITULO TOOLBAR -->
       <div class="d-flex align-center">
-        <v-btn
-          :to = '{name: home}'
-          text
-        >
-          <v-icon size="300%" class="icon-right">mdi-hospital-building</v-icon>
-          <v-toolbar-title>Agenda tu hora</v-toolbar-title>
-          
-        </v-btn>
+        <router-link :to="{name: 'home'}" tag="v-btn"> 
+          <v-btn text large>
+            <v-icon size="300%" class="icon-right">mdi-hospital-building</v-icon>
+            <v-toolbar-title>Agenda tu hora</v-toolbar-title>
+          </v-btn>
+        </router-link>
       </div>
       <!-- FIN: TITULO TOOLBAR -->
 
@@ -94,11 +92,12 @@
     margin-right: 20px;
   }
   .space-alert {
-    height: 5px;
+    height: 35px;
   }
   .divider{
     width:15px;
     height:auto;
     display:inline-block;
   }
+
 </style>
