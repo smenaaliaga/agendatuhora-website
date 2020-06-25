@@ -1,7 +1,6 @@
 <template>
 <v-container>
-    <v-row style="position: absolute; width: 100%;
-  z-index: 100;">
+    <v-row style="position: absolute; width: 100%; z-index: 100;">
         <v-col cols="1" />
         <v-col cols="7">
             <v-text-field

@@ -1,21 +1,24 @@
 <template>
-  <div id="vista-prueba">
-    <Stickytop top="0" :scroll-y="scrollY"></Stickytop>
+  <div>
+    <Stickytop top="1" :scroll-y="scrollY"></Stickytop>
 
     <div class="first-space" />
 
 <div v-for="(profesional, index) in profesionales" v-bind:key="index">
   <v-card
-      class="mx-auto"
-      max-width="600"
-      outlined
+    class="mx-auto"
+    max-width="600"
+    outlined
   >
     <v-container>
       <v-row justify="space-between">
         <v-col cols="2">
-          <avatar username="Ivo Carvallo"
-            :size="85">
-          </avatar>
+          <v-avatar 
+            :size="85"
+            rounded
+            color="grey"
+            >
+          </v-avatar>
         </v-col>
         <v-col cols="6">
           <v-list-item-content>
@@ -28,12 +31,16 @@
           </v-list-item-content>
         </v-col>
         <v-col cols="4">
+          <v-card-actions>
+          <v-spacer></v-spacer>
+          <div class="space-button" />
           <v-btn
             text
-            color="deep-purple accent-4"
+            color="#b96d12"
           >
             Agendar hora
           </v-btn>
+        </v-card-actions>
         </v-col>
       </v-row>
     </v-container>
@@ -41,16 +48,15 @@
   <div class="space-cards" />
 </div>
 
+  <div class="space-footer" />
   </div>
 </template>
 
 <script>
 import Stickytop from '../components/Stickytop';
-import Avatar from 'vue-avatar';
 export default {
   components: {
-    Stickytop,
-    Avatar
+    Stickytop
   },
   data() {
     return {
@@ -76,5 +82,8 @@ export default {
 }
 .space-cards {
   height: 10px;
+}
+.space-footer {
+  height: 100px;
 }
 </style>
