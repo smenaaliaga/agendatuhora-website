@@ -1,7 +1,7 @@
 <template>
-
 <v-container>
-    <v-row>
+    <v-row style="position: absolute; width: 100%;
+  z-index: 100;">
         <v-col cols="1" />
         <v-col cols="7">
             <v-text-field
@@ -10,15 +10,15 @@
                 placeholder="Busca tu profesional o especialidad"
                 outlined
                 :style="myStyle"
-            ></v-text-field>
+            />
         </v-col>
         <v-col cols="3">
             <v-btn rounded 
                 href="#"
-                color="green accent-4"
+                color="#80982A"
                 dark
                 x-large
-                :elevation="5"
+                :elevation="3"
                 :style="myStyle"
             > 
                 <v-icon class="icon-right">mdi-magnify</v-icon>
@@ -28,7 +28,6 @@
         <v-col cols="1" />   
     </v-row>
 </v-container>
-
 </template>
 
 <script>
@@ -59,11 +58,5 @@ export default {
 </script>
 
 <style>
-.a-box {
-  display: inline-block;
-  height: 5rem;
-  width: 5rem;
-  border: 2px solid blue;
-  position: relative;
-}
+
 </style>

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -13,5 +14,13 @@ export const store = new Vuex.Store({
             { comuna: 'Quilpué', abbr: 'QLP' },
             { comuna: 'Villa Alemana', abbr: 'VLN' },
         ],
+        profesionales: [
+            { nombre: 'Ivo Carvallo', profesion: 'Veterinario', especialidad: 'Caballos'},
+            { nombre: 'Eduardo Garcia', profesion: 'Kinesiologo', especialidad: 'Algo'},
+            { nombre: 'Yessica Sanchez', profesion: 'Tec. Enfermeria', especialidad: 'Algo'},
+            { nombre: 'Pedro Barrientos', profesion: 'Psicologo', especialidad: 'Algo'},
+            { nombre: 'Angelica Roman', profesion: 'Enfermera', especialidad: 'Algo'},
+            { nombre: 'Veronica Olivares', profesion: 'Kinesiologa', especialidad: 'Algo'},
+        ]
     },
 });

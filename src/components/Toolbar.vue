@@ -2,7 +2,7 @@
 <v-vue>
   <!-- TOOLBAR -->
   <v-card flat tile>
-    <v-toolbar height="72px" dark color="indigo" :elevation="10">
+    <v-toolbar height="72px" dark color="#007C92" :elevation="10">
 
       <!-- TITULO TOOLBAR -->
       <div class="d-flex align-center">
@@ -39,8 +39,8 @@
       <!-- BTN TU FICHA -->
       <v-btn rounded
         href="#"
-        color="green accent-3"
-        light 
+        color="#80982A"
+        dark 
       >
         <v-icon class="icon-right">mdi-file-document</v-icon>
         <span class="mr-2">Tu Ficha</span>
@@ -56,9 +56,10 @@
       <v-alert
       dismissible
       icon="mdi-school"
+      color="grey darken-4"
       dark
       dense
-      :elevation="10"
+      :elevation="7"
       >
       Conoce las ventajas de tener <strong>Tu Ficha <a href="#">aquí</a></strong> !
       </v-alert>
@@ -70,7 +71,6 @@
 
 <script>
   export default {
-    name: 'App',
     data () {
       return {
         alert: true,

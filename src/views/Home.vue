@@ -34,10 +34,10 @@
 
                             <v-btn rounded 
                                 href="#"
-                                color="green accent-4"
+                                color="#80982A"
                                 dark
                                 x-large
-                                :elevation="5"
+                                :elevation="3"
                             > 
                                 <v-icon class="icon-right">mdi-magnify</v-icon>
                                 <span class="mr-2">Buscar</span>
@@ -51,7 +51,8 @@
 
                             <v-btn rounded 
                                 href="#"
-                                color="green accent-3"
+                                color="#b96d12"
+                                dark
                                 medium 
                             > 
                                 <span class="mr-2">¿Necesitas Ayuda?</span>

@@ -7,25 +7,17 @@ import { routes } from './routes';
 
 Vue.config.productionTip = false
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 let router = new VueRouter({
   mode: 'history',
   routes
 });
 
-import Toolbar from '@/components/Toolbar'
-Vue.component("toolbar", Toolbar);
-
-import Footer from '@/components/Footer'
-Vue.component("footer", Footer);
-
 new Vue({
   el: "#app",
   vuetify,
   store,
   router,
-  components: { App },
-  template: '<App />',
   render: h => h(App)
 });
