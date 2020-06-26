@@ -6,9 +6,7 @@
 
       <!-- TITULO TOOLBAR -->
       <v-btn text large @click="backHome()">
-        <icon-base width="180" height="180" icon-name="SEMID">
-          <icon-SemidConjunto />
-        </icon-base>
+        <icon-base width="180" height="180" icon-name="SEMID"><icon-SemidConjunto /></icon-base>
       </v-btn>
       <!-- FIN: TITULO TOOLBAR -->
 
