@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
     "vue": "^2.6.11",
+    "vue-aos": "^1.0.1",
     "vue-avatar": "^2.3.0",
     "vue-router": "^3.3.4",
     "vue-sticky-directive": "0.0.10",

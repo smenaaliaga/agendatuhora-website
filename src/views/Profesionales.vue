@@ -4,8 +4,8 @@
     <div v-sticky sticky-offset="{top: -10}" sticky-z-index="20">
       <v-container>
           <v-row style="position: absolute; width: 100%; z-index: 100;">
-              <v-col cols="1" />
-              <v-col cols="7">
+              <v-col cols="2" />
+              <v-col cols="5">
                   <v-text-field
                       solo
                       rounded
@@ -27,10 +27,18 @@
                       <span class="mr-2">Buscar</span>
                   </v-btn>
               </v-col>
-              <v-col cols="1" />   
+              <div data-aos="fade-down" data-aos-anchor="#trigger-left">
+                <v-col cols="2">
+                  <v-btn class="mx-2" fab light large color="#f1e345">
+                    <v-icon>mdi-file-document</v-icon>
+                  </v-btn>
+                </v-col> 
+              </div>
           </v-row>
       </v-container>
     </div>
+
+
 
     <div class="first-space" />
 
@@ -75,6 +83,7 @@
           </v-row>
         </v-container>
       </v-card>
+      <div v-if="index == 2"><div id="trigger-left"></div></div>
       <div class="space-cards" />
     </div>
     <div class="space-footer" />
@@ -101,4 +110,50 @@ export default {
 .space-footer {
   height: 100px;
 }
+</style>
+
+<style lang="scss">
+@mixin center-v () {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.item {
+  width: 200px;
+  height: 200px;
+  margin: 50px auto;
+  padding-top: 75px;
+  background: #ccc;
+  text-align: center;
+  color: #FFF;
+  font-size: 3em;
+  
+  span {
+    display: block;
+    font-size: 1rem;
+  }
+
+  &--primary {
+    @include center-v;
+    right: 20px;
+    background: green;
+  }
+  
+  &--secondary {
+    @include center-v;
+    left: 20px;
+    background: red;
+  }
+}
+
 </style>
