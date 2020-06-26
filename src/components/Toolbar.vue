@@ -7,7 +7,11 @@
       <!-- TITULO TOOLBAR -->
       <div class="icon-right" />
 
-      <icon-base width="180" height="180" icon-name="SEMID"><icon-SemidConjunto /></icon-base>
+      <v-btn text large @click="backHome()">
+        <icon-base width="180" height="180" icon-name="SEMID">
+          <icon-SemidConjunto />
+        </icon-base>
+      </v-btn>
       <!-- FIN: TITULO TOOLBAR -->
 
       <v-divider class="mx-4" inset vertical />
@@ -76,6 +80,11 @@
       return {
         alert: true,
       }
+    },
+    methods: {
+        backHome() {
+            this.$router.push('/');
+        }
     },
     computed: {
       items() {
