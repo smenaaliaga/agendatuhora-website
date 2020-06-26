@@ -5,14 +5,9 @@
     <v-toolbar height="72px" dark color="#007C92" :elevation="10">
 
       <!-- TITULO TOOLBAR -->
-      <div class="d-flex align-center">
-        <router-link :to="{name: 'home'}" tag="v-btn"> 
-          <v-btn text large>
-            <v-icon size="300%" class="icon-right">mdi-hospital-building</v-icon>
-            <v-toolbar-title>Agenda tu hora</v-toolbar-title>
-          </v-btn>
-        </router-link>
-      </div>
+      <div class="icon-right" />
+
+      <icon-base width="180" height="180" icon-name="SEMID"><icon-SemidConjunto /></icon-base>
       <!-- FIN: TITULO TOOLBAR -->
 
       <v-divider class="mx-4" inset vertical />
@@ -39,8 +34,8 @@
       <!-- BTN TU FICHA -->
       <v-btn rounded
         href="#"
-        color="#80982A"
-        dark 
+        color="#f1e345"
+        light 
       >
         <v-icon class="icon-right">mdi-file-document</v-icon>
         <span class="mr-2">Tu Ficha</span>
@@ -54,12 +49,12 @@
   <!-- FIN: ALERTA -->
   <div class="space-alert">
       <v-alert
-      dismissible
-      icon="mdi-school"
-      color="grey darken-4"
-      dark
-      dense
-      :elevation="7"
+        dismissible
+        icon="mdi-school"
+        color="grey darken-4"
+        dark
+        dense
+        :elevation="7"
       >
       Conoce las ventajas de tener <strong>Tu Ficha <a href="#">aquí</a></strong> !
       </v-alert>
@@ -70,7 +65,13 @@
 </template>
 
 <script>
+  import IconBase from './IconBase.vue'
+  import IconSemidConjunto from './icons/IconSemidConjunto.vue'
   export default {
+    components: {
+      IconBase,
+      IconSemidConjunto
+    },
     data () {
       return {
         alert: true,
@@ -99,5 +100,4 @@
     height:auto;
     display:inline-block;
   }
-
 </style>

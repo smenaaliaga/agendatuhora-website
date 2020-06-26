@@ -36,7 +36,7 @@
           <div class="space-button" />
           <v-btn
             text
-            color="#b96d12"
+            color="#0C7471"
           >
             Agendar hora
           </v-btn>

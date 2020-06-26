@@ -14,7 +14,7 @@
         <v-col cols="3">
             <v-btn rounded 
                 href="#"
-                color="#80982A"
+                color="#507F51"
                 dark
                 x-large
                 :elevation="3"

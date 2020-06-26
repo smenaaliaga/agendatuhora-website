@@ -9,7 +9,7 @@
                 class="text-center"
                 cols="12"
                 >
-                    <v-btn :to="{name: 'profesionales'}">
+                    <v-btn @click="goProfesionales()">
                         <strong>Encuentra a todos nuestros profesionales aquí</strong>
                     </v-btn>
                 </v-col>
@@ -27,7 +27,7 @@
                 >
                     <v-stepper>
                         <v-stepper-header>
-                            <v-stepper-step color="#b96d12" step="1">Escoge tu profesional</v-stepper-step>
+                            <v-stepper-step color="#BF0811" step="1">Escoge tu profesional</v-stepper-step>
 
                             <v-divider></v-divider>
 
@@ -46,6 +46,11 @@
 
 <script>
 export default {
+    methods: {
+        goProfesionales() {
+            this.$router.push('/profesionales');
+        }
+    },
     computed: {
       homePage() {
         if(this.$route.path == "/") {

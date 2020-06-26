@@ -1,5 +1,5 @@
 import Home from '@/views/Home.vue';
-import Profesionales from '@/views/Profesionales'; // no hay necesidad de porner .vue
+import Profesionales from '@/views/Profesionales';
 
 export const routes = [
     {

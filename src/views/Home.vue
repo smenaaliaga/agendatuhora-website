@@ -34,7 +34,7 @@
 
                             <v-btn rounded 
                                 href="#"
-                                color="#80982A"
+                                color="#507F51"
                                 dark
                                 x-large
                                 :elevation="3"
@@ -51,7 +51,7 @@
 
                             <v-btn rounded 
                                 href="#"
-                                color="#b96d12"
+                                color="#BF0811"
                                 dark
                                 medium 
                             > 
