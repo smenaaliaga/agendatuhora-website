@@ -1,72 +1,73 @@
 <template>
-    <v-vue>
-        <div v-show="homePage">
-            <v-footer
-            fixed
-            class="transparent"
-            >
-                <v-col
-                class="text-center"
-                cols="12"
-                >
-                    <v-btn @click="goProfesionales()">
-                        <strong>Encuentra a todos nuestros profesionales aquí</strong>
-                    </v-btn>
-                </v-col>
-            </v-footer>
-        </div>
+    <div>
+      <div v-show="homePage">
+          <v-footer
+          fixed
+          class="transparent"
+          >
+              <v-col
+              class="text-center"
+              cols="12"
+              >
+                  <v-btn @click="goProfesionales()">
+                      <strong>Encuentra a todos nuestros profesionales aquí</strong>
+                  </v-btn>
+              </v-col>
+          </v-footer>
+      </div>
 
-        <div v-show="profesionales">
-            <v-footer
-            fixed
-            class="transparent"
-            >
-                <v-col
-                class="text-center"
-                cols="12"
-                >
-                    <v-stepper>
-                        <v-stepper-header>
-                            <v-stepper-step color="#BF0811" step="1">Escoge tu profesional</v-stepper-step>
+      <div v-show="profesionales">
+          <v-footer
+          fixed
+          class="transparent"
+          >
+              <v-col
+              class="text-center"
+              cols="12"
+              >
+                  <v-stepper>
+                      <v-stepper-header>
+                          <v-stepper-step color="#BF0811" step="1">Escoge tu profesional</v-stepper-step>
 
-                            <v-divider></v-divider>
+                          <v-divider></v-divider>
 
-                            <v-stepper-step step="2">Agenda tu hora</v-stepper-step>
+                          <v-stepper-step step="2">Agenda tu hora</v-stepper-step>
 
-                            <v-divider></v-divider>
+                          <v-divider></v-divider>
 
-                            <v-stepper-step step="3">Confirma tu visita</v-stepper-step>
-                        </v-stepper-header>
-                    </v-stepper>
-                </v-col>
-            </v-footer>
-        </div>
-    </v-vue>
+                          <v-stepper-step step="3">Confirma tu visita</v-stepper-step>
+                      </v-stepper-header>
+                  </v-stepper>
+              </v-col>
+          </v-footer>
+      </div>
+    </div>
 </template>
 
 <script>
 export default {
-    methods: {
-        goProfesionales() {
-            this.$router.push('/profesionales');
-        }
+  name: 'Footer',
+  methods: {
+      goProfesionales() {
+          this.$router.push('/profesionales');
+      }
+  },
+  computed: {
+    homePage() {
+      if(this.$route.path == "/") {
+        return true
+      } else {
+        return false
+      }
     },
-    computed: {
-      homePage() {
-        if(this.$route.path == "/") {
-          return true
-        } else {
-          return false
-        }
-      },
-      profesionales() {
-        if(this.$route.path == "/profesionales") {
-          return true
-        } else {
-          return false
-        }
+    profesionales() {
+      if(this.$route.path == "/profesionales") {
+        return true
+      } else {
+        return false
       }
     }
+  }
 }
 </script>
 

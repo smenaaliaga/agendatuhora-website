@@ -29,6 +29,9 @@ new Vue({
     onStick(data) {
       console.log(data);
     },
+    backHome() {
+      this.$router.push('/');
+    }
   },
   render: h => h(App)
 });
