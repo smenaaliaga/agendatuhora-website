@@ -30,12 +30,11 @@
                     <v-card-actions>
                     <v-spacer></v-spacer>
                     <div class="space-button" />
-                    <v-btn
-                        text
-                        color="#0C7471"
-                    >
-                        Agendar hora
-                    </v-btn>
+                    <router-link :to="{name: 'hora', params: {id: index}}">
+                        <v-btn text color="#0C7471">
+                            Agendar hora
+                        </v-btn>
+                    </router-link>
                     </v-card-actions>
                     </v-col>
                 </v-row>

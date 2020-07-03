@@ -14,7 +14,7 @@ export const routes = [
         component: Profesionales
     },
     {
-        path: '/profesionales/Hora/:id', 
+        path: '/profesionales/hora/:id', 
         name: 'hora',
         component: Hora
     }

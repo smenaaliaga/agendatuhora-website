@@ -16,7 +16,7 @@
           </v-footer>
       </div>
 
-      <div v-show="profesionales">
+      <div v-show="profesionales || hora">
           <v-footer
           fixed
           class="transparent"
@@ -25,17 +25,17 @@
               class="text-center"
               cols="12"
               >
-                  <v-stepper>
+                  <v-stepper v-model="completeStep">
                       <v-stepper-header>
-                          <v-stepper-step color="#BF0811" step="1">Escoge tu profesional</v-stepper-step>
+                          <v-stepper-step :complete="completeStep > 1" color="#BF0811" step="1">Escoge tu profesional</v-stepper-step>
 
                           <v-divider></v-divider>
 
-                          <v-stepper-step step="2">Agenda tu hora</v-stepper-step>
+                          <v-stepper-step :complete="completeStep > 2" color="#BF0811" step="2">Agenda tu hora</v-stepper-step>
 
                           <v-divider></v-divider>
 
-                          <v-stepper-step step="3">Confirma tu visita</v-stepper-step>
+                          <v-stepper-step color="#BF0811" step="3">Confirma tu visita</v-stepper-step>
                       </v-stepper-header>
                   </v-stepper>
               </v-col>
@@ -54,24 +54,41 @@ export default {
   },
   computed: {
     homePage() {
-      if(this.$route.path == "/") {
+      if(this.$route.name == "home") {
         return true
       } else {
         return false
       }
     },
     profesionales() {
-      if(this.$route.path == "/profesionales") {
+      if(this.$route.name == "profesionales") {
         return true
       } else {
         return false
+      }
+    },
+    hora() {
+      if(this.$route.name == "hora") {
+        return true
+      } else {
+        return false
+      }
+    },
+    completeStep() {
+      if(this.profesionales){
+        return 1
+      }
+      if(this.hora){
+        return 2
+      }else{
+        return 3
       }
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .transparent {
   background-color: transparent!important;
   border-color: transparent!important;

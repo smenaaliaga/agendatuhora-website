@@ -16,7 +16,6 @@
                     rounded
                     placeholder="Busca tu profesional o especialidad"
                     outlined
-                    :style="myStyle"
                 />
             </v-col>
             <v-col cols="3">
@@ -26,7 +25,6 @@
                     dark
                     x-large
                     :elevation="3"
-                    :style="myStyle"
                 > 
                     <v-icon class="icon-right">mdi-magnify</v-icon>
                     <span class="mr-2">Buscar</span>
@@ -48,13 +46,13 @@
     <TarjetaProfesional />
     
     <div class="space-footer" />
-    
+
   </div>
 </template>
 
 <script>
-import IconBase from '../components/IconBase.vue'
-import IconSemid from '../components/icons/IconSemid.vue'
+import IconBase from '@/components/IconBase'
+import IconSemid from '@/components/icons/IconSemid'
 import TarjetaProfesional from '@/components/TarjetaProfesional'
 export default {
   components: {

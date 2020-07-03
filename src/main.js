@@ -25,10 +25,5 @@ new Vue({
   data: {
     stickyEnabled: true,
   },
-  methods: {
-    onStick(data) {
-      console.log(data);
-    }
-  },
   render: h => h(App)
 });
