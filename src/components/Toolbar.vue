@@ -121,6 +121,11 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
         dialog: false,
       }
     },
+    methods: {
+      backHome() {
+        this.$router.push('/');
+      }
+    },
     computed: {
       ...mapState(['items','select'])
     }, 

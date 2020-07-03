@@ -1,5 +1,6 @@
-import Home from '@/views/Home.vue';
-import Profesionales from '@/views/Profesionales';
+import Home from './views/Home.vue';
+import Profesionales from './views/Profesionales';
+import Hora from './views/Hora';
 
 export const routes = [
     {
@@ -11,5 +12,10 @@ export const routes = [
         path: '/profesionales', 
         name: 'profesionales',
         component: Profesionales
+    },
+    {
+        path: '/profesionales/Hora/:id', 
+        name: 'hora',
+        component: Hora
     }
 ];
