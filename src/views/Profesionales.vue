@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import IconBase from '../components/IconBase.vue'
 import IconSemid from '../components/icons/IconSemid.vue'
 export default {
@@ -105,9 +106,7 @@ export default {
     IconSemid
   },
   computed: {
-    profesionales() {
-      return this.$store.state.profesionales
-    }
+    ...mapState(['profesionales'])
   }
 } 
 </script>

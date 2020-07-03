@@ -106,6 +106,7 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import IconBase from './IconBase.vue'
   import IconSemidConjunto from './icons/IconSemidConjunto.vue'
   export default {
@@ -125,12 +126,7 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
         }
     },
     computed: {
-      items() {
-        return this.$store.state.items;
-      },
-      select() {
-        return this.$store.state.select;
-      }
+      ...mapState(['items','select'])
     }, 
   }
 </script>
