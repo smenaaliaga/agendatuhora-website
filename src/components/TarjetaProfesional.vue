@@ -3,41 +3,41 @@
         <div v-for="(profesional, index) in profesionales" v-bind:key="index">
             <v-card
                 class="mx-auto"
-                max-width="600"
+                max-width="650"
                 outlined
             >
                 <v-container>
-                <v-row justify="space-between">
-                    <v-col cols="2">
-                    <v-avatar 
-                        :size="85"
-                        rounded
-                        color="grey"
-                        >
-                    </v-avatar>
-                    </v-col>
-                    <v-col cols="6">
-                    <v-list-item-content>
-                        <v-list-item-title class="headline mb-1">
-                            {{profesional.nombre}}
-                        </v-list-item-title>
-                        <v-list-item-subtitle>
-                            {{profesional.profesion}} - Especialista en {{profesional.especialidad}}
-                        </v-list-item-subtitle>
-                    </v-list-item-content>
-                    </v-col>
-                    <v-col cols="4">
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <div class="space-button" />
-                    <router-link :to="{name: 'hora', params: {id: index}}">
-                        <v-btn text color="#0C7471">
-                            Agendar hora
-                        </v-btn>
-                    </router-link>
-                    </v-card-actions>
-                    </v-col>
-                </v-row>
+                    <v-row justify="space-between">
+                        <v-col cols="2">
+                            <v-avatar 
+                                :size="100"
+                                rounded
+                                color="grey"
+                            >
+                            </v-avatar>
+                        </v-col>
+                        <v-col cols="4">
+                            <div align="right">
+                                <div class="title font-weight-regular">
+                                    {{ profesional.nombre }}
+                                </div>
+                                <div class="font-weight-bold">
+                                    {{ profesional.profesion }}
+                                </div> 
+                                <div class="font-weight-light">
+                                    {{ profesional.comuna }}
+                                </div>
+                            </div>
+                        </v-col>
+                        <v-col cols="6">
+                            <div class="caption">
+                                {{profesional.bio}}
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <div align="right">
+                        <v-btn text small color="primary">Agenda tu hora</v-btn>
+                    </div>
                 </v-container>
             </v-card>
 
@@ -52,7 +52,12 @@
 import { mapState } from 'vuex'
 export default {
     computed: {
-    ...mapState(['profesionales'])
+    ...mapState(['profesionales']),
+  },
+  methods: {
+      goProfesionales() {
+          this.$router.push('/profesionales/hora');
+      }
   }
 }
 </script>
