@@ -27,15 +27,15 @@
               >
                   <v-stepper v-model="completeStep">
                       <v-stepper-header>
-                          <v-stepper-step :complete="completeStep > 1" color="#BF0811" step="1">Escoge tu profesional</v-stepper-step>
+                          <v-stepper-step :complete="completeStep > 1" color="green" step="1">Escoge tu profesional</v-stepper-step>
 
                           <v-divider></v-divider>
 
-                          <v-stepper-step :complete="completeStep > 2" color="#BF0811" step="2">Agenda tu hora</v-stepper-step>
+                          <v-stepper-step :complete="completeStep > 2" color="green" step="2">Agenda tu hora</v-stepper-step>
 
                           <v-divider></v-divider>
 
-                          <v-stepper-step color="#BF0811" step="3">Confirma tu visita</v-stepper-step>
+                          <v-stepper-step color="green" step="3">Confirma tu visita</v-stepper-step>
                       </v-stepper-header>
                   </v-stepper>
               </v-col>

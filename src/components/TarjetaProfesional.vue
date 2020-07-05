@@ -3,18 +3,15 @@
         <div v-for="(profesional, index) in profesionales" v-bind:key="index">
             <v-card
                 class="mx-auto"
-                max-width="650"
+                max-width="600"
                 outlined
             >
                 <v-container>
                     <v-row justify="space-between">
                         <v-col cols="2">
-                            <v-avatar 
-                                :size="100"
-                                rounded
-                                color="grey"
-                            >
-                            </v-avatar>
+                            <v-list-item-avatar :size="100">
+                                <img :src="profesional.avatar">
+                            </v-list-item-avatar>
                         </v-col>
                         <v-col cols="4">
                             <div align="right">
@@ -35,8 +32,10 @@
                             </div>
                         </v-col>
                     </v-row>
+                    
                     <div align="right">
-                        <v-btn text small color="primary">Agenda tu hora</v-btn>
+                        <v-divider inset="32"></v-divider>
+                        <v-btn @click="goProfesional(profesional.id)" text small color="primary"><strong>Agenda tu hora</strong></v-btn>
                     </div>
                 </v-container>
             </v-card>
@@ -55,8 +54,8 @@ export default {
     ...mapState(['profesionales']),
   },
   methods: {
-      goProfesionales() {
-          this.$router.push('/profesionales/hora');
+      goProfesional(id) {
+          this.$router.push({name: 'hora', params: {id: id} });
       }
   }
 }
