@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--
         <div v-for="(profesional, index) in profesionales" v-bind:key="index">
             <v-card
                 class="mx-auto"
@@ -44,19 +45,25 @@
 
             <div class="space-cards" />
         </div>
+        -->
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 export default {
-    computed: {
-    ...mapState(['profesionales']),
-  },
-  methods: {
-      goProfesional(id) {
-          this.$router.push({name: 'hora', params: {id: id} });
-      }
+name: 'TarjetaProfesionales',
+created(){
+    this.getProfesionales()
+},
+computed: {
+    //...mapState(['profesionales']),
+},
+methods: {
+    ...mapActions(['getProfesionales']),
+    goProfesional(id) {
+        this.$router.push({name: 'hora', params: {id: id} });
+    }
   }
 }
 </script>

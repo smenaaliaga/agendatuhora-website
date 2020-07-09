@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { db } from '@/firebase'
+import { db } from '../firebase'
 
 Vue.use(Vuex);
 
@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
             { comuna: 'Quilpué', abbr: 'QLP' },
             { comuna: 'Villa Alemana', abbr: 'VLN' },
         ],
+        /*
         profesionales: [
             { id: 0, nombre: 'Mariano Carvallo', profesion: 'Doctor', comuna: 'Valparaíso', avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500"},
             { id: 1, nombre: 'Eduardo Garcia', profesion: 'Kinesiologo', comuna: 'Viña del Mar', avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg', bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500"},
@@ -23,25 +24,28 @@ export const store = new Vuex.Store({
             { id: 4, nombre: 'Angelica Roman', profesion: 'Enfermera', comuna: 'Quilpué', avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg', bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500"},
             { id: 5, nombre: 'Veronica Olivares', profesion: 'Kinesiologa', comuna: 'Villa Alemana', avatar: 'https://cdn.vuetifyjs.com/images/lists/8.jpg', bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500"},
         ],
-        ubicaciones: []
+        */
+        //profesionales: []
     },
     mutations: {
-        setUbicaciones(state, payload) {
-            state.ubicaciones = payload
-        }
+
     },
     actions: {
-        getUbicaciones({commit}) {
-            const ubicaciones = []
-            db.collection('ubicaciones').get()
+        getProfesionales() {
+            //const profesionales = []
+            db.collection('profesionales').get()
             .then(res => {
                 res.forEach(doc =>{
-                    let ubicacion = doc.data()
-                    ubicacion.region  =doc.region
-                    ubicacion.comuna = doc.comuna
-                    ubicaciones.push(ubicacion)
+                    console.log(doc.id)
+                    console.log(doc.data())
+                    /*
+                    let profesional = doc.data()
+                    profesional.region  =doc.region
+                    profesional.comuna = doc.comuna
+                    profesionales.push(profesional)
+                    */
                 })
-                commit('setUbicaciones', ubicaciones)
+                //commit('setProfesionales', profesionales)
             })
         }
     },
@@ -49,5 +53,8 @@ export const store = new Vuex.Store({
         getProfesionalById: (state) => (id) => {
           return state.profesionales.find(profesionales => profesionales.id === id)
         }
+    },
+    modules:{
+        
     }
 });
