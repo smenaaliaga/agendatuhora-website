@@ -25,27 +25,29 @@ export const store = new Vuex.Store({
             { id: 5, nombre: 'Veronica Olivares', profesion: 'Kinesiologa', comuna: 'Villa Alemana', avatar: 'https://cdn.vuetifyjs.com/images/lists/8.jpg', bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500"},
         ],
         */
-        //profesionales: []
+        profesionales: []
     },
     mutations: {
-
+        setProfesionales(state, payload){
+            state.profesionales = payload
+        }
     },
     actions: {
-        getProfesionales() {
-            //const profesionales = []
+        getProfesionales({commit}) {
+            const profesionales = []
             db.collection('profesionales').get()
             .then(res => {
                 res.forEach(doc =>{
                     console.log(doc.id)
                     console.log(doc.data())
-                    /*
+                    
                     let profesional = doc.data()
                     profesional.region  =doc.region
                     profesional.comuna = doc.comuna
                     profesionales.push(profesional)
-                    */
+                    
                 })
-                //commit('setProfesionales', profesionales)
+                commit('setProfesionales', profesionales)
             })
         }
     },
