@@ -39,11 +39,9 @@ export const store = new Vuex.Store({
             .then(res => {
                 res.forEach(doc =>{
                     console.log(doc.id)
-                    console.log(doc.data())
-                    
+                    console.log(doc.data())         
                     let profesional = doc.data()
-                    profesional.region  =doc.region
-                    profesional.comuna = doc.comuna
+                    profesional.id = doc.id
                     profesionales.push(profesional)
                     
                 })

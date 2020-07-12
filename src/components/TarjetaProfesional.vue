@@ -1,7 +1,7 @@
 <template>
     <div>
         
-        <div v-for="(profesional, index) in profesionales" v-bind:key="index">
+        <div v-for="profesional in profesionales" v-bind:key="profesional.id">
             <v-card
                 class="mx-auto"
                 max-width="600"
@@ -17,7 +17,7 @@
                         <v-col cols="4">
                             <div align="right">
                                 <div class="title font-weight-regular">
-                                    {{ profesional.nombre }}
+                                    {{ profesional.nombre }} {{ profesional.apellido }}
                                 </div>
                                 <div class="font-weight-bold">
                                     {{ profesional.profesion }}
@@ -35,13 +35,13 @@
                     </v-row>
                     
                     <div align="right">
-                        <v-divider inset="32"></v-divider>
+                        <v-divider></v-divider>
                         <v-btn @click="goProfesional(profesional.id)" text small color="primary"><strong>Agenda tu hora</strong></v-btn>
                     </div>
                 </v-container>
             </v-card>
 
-            <div v-if="index == 2"><div id="trigger"></div></div>
+            <!--<div v-if="index == 2"><div id="trigger"></div></div>-->
 
             <div class="space-cards" />
         </div>
