@@ -5,25 +5,25 @@
             <v-row>
                 <v-col cols="3">
                     <div align="center">
-                        <v-list-item-avatar :size="150">
-                                <img :src="getProfesional.avatar">
+                            <v-list-item-avatar :size="150">
+                                <img :src="profesional.avatar">
                             </v-list-item-avatar>
                         <div class="title font-weight-regular">
-                            {{ getProfesional.nombre }}
+                            {{ profesional.nombre }}
                         </div>
                         <div style="height: 5px" />
                         <div class="font-weight-bold">
-                            {{ getProfesional.profesion }}
+                            {{ profesional.profesion }}
                         </div> 
                         <div class="font-weight-light">
-                            {{ getProfesional.comuna }}
+                            {{ profesional.comuna }}
                         </div>
                     </div>
                     <div class="space-bio" />
                     <v-divider />
                     <div class="space-bio" />
                     <div align="justify" class="caption">
-                        {{ getProfesional.bio }}
+                        {{ profesional.bio }}
                     </div>
                 </v-col>
                 <v-col cols="1" />
@@ -118,23 +118,33 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
     name: 'Hora',
+    data(){
+        return {
+            id: this.$route.params.id,
+
+            date: new Date().toISOString().substr(0, 10),
+            time: '13:30',
+            timeStep: '10:10',
+        }
+    },
+    created(){
+        this.getProfesional(this.id)
+    },
+    methods: {
+        ...mapActions(['getProfesional']),
+
+
+        allowedHours: v => v % 2,
+        allowedMinutes: v => v >= 10 && v <= 50,
+        allowedStep: m => m % 10 === 0,
+    },
     computed: {
-    getProfesional() {
-        return this.$store.getters.getProfesionalById(Number.parseInt(this.$route.params.id));
-    },
-        ...mapGetters[{getProfesional : 'getProfesionalById'}]
-    },
+        ...mapState(['profesional']),
 
-
-
-    data: () => ({
-      date: new Date().toISOString().substr(0, 10),
-    }),
-
-
+    }
 }
 </script>
 

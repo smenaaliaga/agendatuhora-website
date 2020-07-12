@@ -25,11 +25,15 @@ export const store = new Vuex.Store({
             { id: 5, nombre: 'Veronica Olivares', profesion: 'Kinesiologa', comuna: 'Villa Alemana', avatar: 'https://cdn.vuetifyjs.com/images/lists/8.jpg', bio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500"},
         ],
         */
-        profesionales: []
+        profesionales: [],
+        profesional: { id: '', nombre: '', profesion: '', comuna: '', avatar: '', bio: ""}
     },
     mutations: {
         setProfesionales(state, payload){
             state.profesionales = payload
+        },
+        setProfesional(state, payload){
+            state.profesional = payload
         }
     },
     actions: {
@@ -47,11 +51,14 @@ export const store = new Vuex.Store({
                 })
                 commit('setProfesionales', profesionales)
             })
-        }
-    },
-    getters: {
-        getProfesionalById: (state) => (id) => {
-          return state.profesionales.find(profesionales => profesionales.id === id)
+        },
+        getProfesional({commit}, idProfesional) {
+            db.collection('profesionales').doc(idProfesional).get()
+            .then(doc => {
+                let profesional = doc.data()
+                profesional.id =  doc.id
+                commit('setProfesional', profesional)
+            })
         }
     },
     modules:{
