@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 import { db } from '../firebase'
 
 Vue.use(Vuex);
@@ -26,15 +26,21 @@ export const store = new Vuex.Store({
         ],
         */
         profesionales: [],
-        profesional: { id: '', nombre: '', profesion: '', comuna: '', avatar: '', bio: ""}
+        profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: ''}
     },
     mutations: {
-        setProfesionales(state, payload){
-            state.profesionales = payload
+        setProfesionales(state, profesionales){
+            state.profesionales = profesionales
         },
-        setProfesional(state, payload){
-            state.profesional = payload
-        }
+        setProfesional(state, profesionales){
+            state.profesional = profesionales
+        },
+        eliminarProfesional(state, id){
+            state.profesionales = state.profesionales.filter( doc => {
+                return doc.id != id
+            })
+        },
+        aux(){} // Borrar luego de pillar el problema
     },
     actions: {
         getProfesionales({commit}) {
@@ -42,8 +48,8 @@ export const store = new Vuex.Store({
             db.collection('profesionales').get()
             .then(res => {
                 res.forEach(doc =>{
-                    console.log(doc.id)
-                    console.log(doc.data())         
+                    //console.log(doc.id)
+                    //console.log(doc.data())
                     let profesional = doc.data()
                     profesional.id = doc.id
                     profesionales.push(profesional)
@@ -58,6 +64,13 @@ export const store = new Vuex.Store({
                 let profesional = doc.data()
                 profesional.id =  doc.id
                 commit('setProfesional', profesional)
+            })
+        },
+        editProfesional({commit}, profesional){
+            db.collection('profesionales').doc(profesional.id).update({
+                nombre: profesional.nombre
+            }).then(() => {
+                commit('aux', profesional)
             })
         }
     },
