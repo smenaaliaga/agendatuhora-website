@@ -3,7 +3,7 @@
         <div class="space-init" />
         <v-container>
             <v-row>
-                <v-col cols="3">
+                <v-col cols="12" sm="3">
                     <div align="center">
                             <v-list-item-avatar :size="150">
                                 <img :src="profesional.avatar">
@@ -26,8 +26,8 @@
                         {{ profesional.bio }}
                     </div>
                 </v-col>
-                <v-col cols="1" />
-                <v-col cols="5">
+                <v-col cols="12" sm="1" />
+                <v-col cols="12" sm="5">
 
 <v-card>
     <v-tabs fixed-tabs color="#007C92" >
@@ -76,12 +76,12 @@
 
 
                 </v-col>
-                <v-col cols="1" />
-                <v-col cols="2">
+                <v-col cols="12" sm="1" />
+                <v-col cols="12" sm="2">
 
                     <div align="center">
 
-                        <div style="height: 50px" />
+                        <div style="height: 20px" />
 
                         <div class="subtitle font-weight-regular">
                             Fecha
@@ -110,6 +110,7 @@
                         <v-btn dark color="primary">Siguiente</v-btn>
                     </div>
 
+                    <div class="space-footer" />
 
                 </v-col>
             </v-row>
@@ -154,5 +155,8 @@ export default {
 }
 .space-bio {
     height: 15px;
+}
+.space-footer {
+  height: 100px;
 }
 </style>
