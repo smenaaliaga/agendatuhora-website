@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
     state: {
         select: { comuna: 'Viña del Mar', abbr: 'VDM' },
-        items: [
+        ubicaciones: [
             { comuna: 'Valparaíso', abbr: 'VLP' },
             { comuna: 'Viña del Mar', abbr: 'VDM' },
             { comuna: 'Reñaca', abbr: 'RÑC' },
@@ -68,7 +68,12 @@ export const store = new Vuex.Store({
         },
         editProfesional({commit}, profesional){
             db.collection('profesionales').doc(profesional.id).update({
-                nombre: profesional.nombre
+                nombre: profesional.nombre,
+                apellido: profesional.apellido,
+                profesion: profesional.profesion,
+                comuna: profesional.comuna,
+                avatar: profesional.avatar,
+                bio: profesional.bio
             }).then(() => {
                 commit('aux', profesional)
             })

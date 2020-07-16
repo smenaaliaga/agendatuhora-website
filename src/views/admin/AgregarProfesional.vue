@@ -1,10 +1,9 @@
 <template>
     <v-container>
         <div class="space" />
-        <h1>Editar</h1>
+    <h1>Añadir profesional</h1>
         <div class="space" />
-        <p>id:  {{ profesional.id }}</p>
-        <form @submit.prevent="editar">
+        <form @submit.prevent="agregar">
             <v-text-field
                 v-model="profesional.nombre"
                 label="Nombre"
@@ -27,28 +26,26 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import {  mapActions } from 'vuex'
 
 export default {
     name: 'EditarAdmin',
     data() {
         return {
-            id: this.$route.params.id,
+            profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: ''}
         }
     },
     created() {
-        this.getProfesional(this.id)
-    },
+
+},
     methods: {
         ...mapActions(['getProfesional','editProfesional']),
-        editar(){
-            this.editProfesional(this.profesional).then(() => {
-                this.$router.push({name: 'profesionalesadmin'})
-            })
+        agregar(){
+
         }
     },
     computed: {
-        ...mapState(['profesional'])
+
     }
 }
 </script>

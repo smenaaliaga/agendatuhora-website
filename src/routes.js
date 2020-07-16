@@ -3,8 +3,10 @@ import Profesionales from './views/Profesionales';
 import Hora from './views/Hora';
 
 // Administracion
-import EditarAdmin from './views/admin/EditarAdmin';
+import EditarProfesional from './views/admin/EditarProfesional';
 import ProfesionalesAdmin from './views/admin/ProfesionalesAdmin';
+import AgregarProfesional from './views/admin/AgregarProfesional';
+
 
 export const routes = [
     {
@@ -24,9 +26,14 @@ export const routes = [
     },
     // Administracion
     {
-        path: '/admin/editar/:id', 
-        name: 'editaradmin',
-        component: EditarAdmin
+        path: '/admin/profesionales/editar/:id', 
+        name: 'editarProfesional',
+        component: EditarProfesional
+    },
+    {
+        path: '/admin/profesionales/agregar', 
+        name: 'agregarProfesional',
+        component: AgregarProfesional
     },
     {
         path: '/admin/profesionales', 

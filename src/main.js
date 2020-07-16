@@ -3,12 +3,12 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { store } from './store/store'
 import VueRouter from 'vue-router'
-import { routes } from './router'
+import { routes } from './routes'
 
 import Sticky from 'vue-sticky-directive'
 Vue.use(Sticky)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false  
 
 Vue.use(VueRouter)
 

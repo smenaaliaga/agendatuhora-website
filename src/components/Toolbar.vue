@@ -15,7 +15,7 @@
       <!-- SELECION DE COMUNA -->
       <v-select
           v-model="select"
-          :items="items"
+          :items="ubicaciones"
           item-text="comuna"
           item-value="abbr"
           menu-props="auto"
@@ -127,7 +127,7 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
       }
     },
     computed: {
-      ...mapState(['items','select'])
+      ...mapState(['ubicaciones','select'])
     }, 
   }
 </script>

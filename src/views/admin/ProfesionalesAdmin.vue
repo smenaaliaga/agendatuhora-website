@@ -3,7 +3,7 @@
         <div class="space" />
         <h1>Lista de Profesionales</h1>
         <div class="space" />
-        <router-link :to="{name: 'agregar'}">
+        <router-link :to="{name: 'agregarProfesional'}">
             <v-btn medium color="primary">Agregar Profesional</v-btn>
         </router-link>
         <div class="space" />
@@ -20,13 +20,13 @@
 
             <tbody>
             <tr v-for="profesional in profesionales" :key="profesional.id">
-                <td>{{ profesional.id }}</td>
+                <td class="text--secondary">{{ profesional.id }}</td>
                 <td>{{ profesional.nombre }} {{ profesional.apellido }}</td>
                 <td>{{ profesional.profesion }}</td>
                 <td>{{ profesional.comuna }}</td>
                 <td>
                     <v-btn color="warning" dark
-                    :to="{name: 'editaradmin', params:{ id: profesional.id }}">
+                    :to="{name: 'editarProfesional', params:{ id: profesional.id }}">
                         Editar
                     </v-btn>
                     <v-btn text small color="error" @click="eliminarTarea(profesional.id)">Eliminar</v-btn>
