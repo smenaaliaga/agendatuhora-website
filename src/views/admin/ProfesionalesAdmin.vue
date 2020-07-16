@@ -29,7 +29,8 @@
                     :to="{name: 'editarProfesional', params:{ id: profesional.id }}">
                         Editar
                     </v-btn>
-                    <v-btn text small color="error" @click="eliminarTarea(profesional.id)">Eliminar</v-btn>
+                    <v-btn text small color="error" 
+                    @click="eliminarProfesional(profesional.id)">Eliminar</v-btn>
                 </td>
             </tr>
             </tbody>
@@ -40,15 +41,15 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
-name: 'ProfesionalesAdmin',
-created(){
-    this.getProfesionales()
-},
-computed: {
-    ...mapState(['profesionales']),
-},
-methods: {
-    ...mapActions(['getProfesionales'])
+    name: 'ProfesionalesAdmin',
+    created(){
+        this.getProfesionales()
+    },
+    computed: {
+        ...mapState(['profesionales']),
+    },
+    methods: {
+        ...mapActions(['getProfesionales','eliminarProfesional'])
   }
 }
 </script>

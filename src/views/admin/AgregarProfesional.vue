@@ -3,33 +3,74 @@
         <div class="space" />
     <h1>Añadir profesional</h1>
         <div class="space" />
-        <form @submit.prevent="agregar">
-            <v-text-field
-                v-model="profesional.nombre"
-                label="Nombre"
-                required
-            ></v-text-field>
-            <v-text-field
-                v-model="profesional.apellido"
-                label="Apellido"
-                required
-            ></v-text-field>
-            <v-text-field
-                v-model="profesional.profesion"
-                label="Profesion"
-                required
-            ></v-text-field>
-
-            <v-btn color="primary" type="submit">Editar</v-btn>
+        <form @submit.prevent="agregar">   
+            <v-row>
+                <v-col cols="12" sm="3">
+                    <v-text-field
+                        v-model="profesional.nombre"
+                        label="Nombre"
+                        prepend-icon="mdi-account-edit"
+                        required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="3">
+                    <v-text-field
+                        v-model="profesional.apellido"
+                        label="Apellido"
+                        required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6">
+                    <v-text-field
+                        v-model="profesional.profesion"
+                        label="Profesion"
+                        prepend-icon="mdi-doctor"
+                        required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6">
+                    <v-select
+                        v-model="profesional.comuna"
+                        :items="ubicaciones"
+                        item-text="comuna"
+                        item-value="comuna"
+                        menu-props="auto"
+                        label="Comuna"
+                        persistent-hint
+                        prepend-icon="mdi-map-marker"
+                        single-line
+                        size="1px"
+                    ></v-select>
+                </v-col>
+                <v-col cols="12" sm="6">
+                    <v-text-field
+                        v-model="profesional.avatar"
+                        label="Avatar"
+                        prepend-icon="mdi-camera"
+                        required
+                    ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12">
+                    <v-textarea
+                        v-model="profesional.bio"
+                        prepend-icon="mdi-account-details"
+                        label="Bio"
+                        rows="2"
+                        required
+                    ></v-textarea>
+                </v-col>
+                <v-btn color="primary" type="submit">Agregar</v-btn>
+            
+            </v-row>
         </form>
     </v-container>
 </template>
 
 <script>
-import {  mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-    name: 'EditarAdmin',
+    name: 'AgregarAdmin',
     data() {
         return {
             profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: ''}
@@ -39,13 +80,15 @@ export default {
 
 },
     methods: {
-        ...mapActions(['getProfesional','editProfesional']),
+        ...mapActions(['agregarProfesional']),
         agregar(){
-
+            this.agregarProfesional(this.profesional).then(() => {
+                this.$router.push({name: 'profesionalesadmin'})
+            })
         }
     },
     computed: {
-
+        ...mapState(['ubicaciones','seleccion'])
     }
 }
 </script>

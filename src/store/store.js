@@ -40,6 +40,9 @@ export const store = new Vuex.Store({
                 return doc.id != id
             })
         },
+        setEliminarProfesional(state, payload){
+            state.profesionales = state.profesionales.filter(item => item.id !== payload)
+        },
         aux(){} // Borrar luego de pillar el problema
     },
     actions: {
@@ -76,6 +79,26 @@ export const store = new Vuex.Store({
                 bio: profesional.bio
             }).then(() => {
                 commit('aux', profesional)
+            })
+        },
+        agregarProfesional({commit}, profesional){
+            db.collection('profesionales').add({
+                nombre: profesional.nombre,
+                apellido: profesional.apellido,
+                profesion: profesional.profesion,
+                comuna: profesional.comuna,
+                avatar: profesional.avatar,
+                bio: profesional.bio
+            })
+            .then(doc => {
+                console.log(doc.id)
+                commit('aux', profesional)
+            })
+        },
+        eliminarProfesional({commit}, id){
+            db.collection('profesionales').doc(id).delete()
+            .then(() => {
+                commit('setEliminarProfesional', id)
             })
         }
     },
