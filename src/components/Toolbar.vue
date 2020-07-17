@@ -4,13 +4,18 @@
   <v-card flat tile>
     <v-toolbar height="72px" dark color="#007C92" :elevation="10">
 
-      <!-- TITULO TOOLBAR -->
-      <v-btn text large @click="backHome()">
-        <icon-base width="180" height="180" icon-name="SEMID"><icon-SemidConjunto /></icon-base>
-      </v-btn>
+      <!-- TITULO TOOLBAR @click="backHome()" -->
+
+          <v-btn class="icon mx-2" text fab light  @click="backHome()" color="grey">
+            <icon-base width="140" height="140" icon-name="SEMID"><icon-Semid /></icon-base>
+          </v-btn>
+
+        <span class="text">
+          <icon-base width="120" height="120" icon-name="SEMID"><icon-SemidLetra /></icon-base>
+        </span>
       <!-- FIN: TITULO TOOLBAR -->
 
-      <v-divider class="mx-4" inset vertical />
+      <v-divider class="mx-2" inset vertical />
 
       <!-- SELECION DE COMUNA -->
       <v-select
@@ -21,7 +26,7 @@
           menu-props="auto"
           hint="Selecciona tu comuna"
           persistent-hint
-          prepend-icon="mdi-map-marker"
+          :prepend-icon="!this.mobile ? 'mdi-map-marker' : ''"
           single-line
           size="1px"
       ></v-select>
@@ -29,7 +34,7 @@
       
       <v-spacer />
 
-      <v-divider class="mx-4" inset vertical />
+      <v-divider class="mx-2" inset vertical />
       
       <!-- BTN TU FICHA -->
       <v-btn rounded
@@ -37,8 +42,8 @@
         color="#f1e345"
         light 
       >
-        <v-icon class="icon-right">mdi-file-document</v-icon>
-        <span class="mr-2">Tu Ficha</span>
+        <v-icon class="icon">mdi-account</v-icon>
+        <span class="text mr-2">Tu Usuario</span>
       </v-btn>
       <!-- FIN: BTN TU FICHA -->
 
@@ -49,16 +54,17 @@
   <!-- FIN: ALERTA -->
   <div class="space-alert">
       <v-alert
-        dismissible
-        icon="mdi-school"
         color="grey darken-4"
         dark
         dense
         height="40px"
         :elevation="7"
       >
+      <span class="text">
+      <v-icon class="icon">mdi-school</v-icon>
       Conoce las ventajas de tener <strong>Tu Ficha 
-        <a @click.stop="dialog = true">aquí</a></strong> !
+        <a @click.stop="dialog = true">aquí</a></strong>
+      </span>
       </v-alert>
   </div>
   <!--  FIN: ALERTA -->
@@ -108,13 +114,16 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
 <script>
   import { mapState } from 'vuex'
   import IconBase from './IconBase.vue'
-  import IconSemidConjunto from './icons/IconSemidConjunto.vue'
+  import IconSemidLetra from './icons/IconSemidLetra.vue'
+  import IconSemid from '@/components/icons/IconSemid'
   export default {
     name: 'Toolbar',
     components: {
       IconBase,
-      IconSemidConjunto
+      IconSemid,
+      IconSemidLetra
     },
+    props: ['mobile'],
     data () {
       return {
         alert: true,
@@ -128,7 +137,7 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
     },
     computed: {
       ...mapState(['ubicaciones','select'])
-    }, 
+    }
   }
 </script>
 
