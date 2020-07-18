@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <div :class="!this.mobile ? 'espacio' : ''" />
+        <div class="espacio" />
         <v-row>
             
             <v-col cols="12" sm="2" />
@@ -12,9 +12,10 @@
                 </div>
             </v-col>
             <v-col cols="12" sm="2" />
-
+        </v-row>
+        <v-row no-gutters>
             <v-col cols="12" sm="2" />
-            <v-col cols="9" sm="6">
+            <v-col cols="8" sm="6">
 
                 <v-text-field
                     solo
@@ -24,7 +25,7 @@
                 ></v-text-field>
                 
             </v-col>
-            <v-col cols="3" sm="2">
+            <v-col cols="4" sm="2">
 
                 <v-btn rounded 
                     href="#"
@@ -39,6 +40,8 @@
             
             </v-col>
             <v-col cols="12" sm="2" />
+        </v-row>
+        <v-row>
 
             <v-col class="text-center" cols="12">
 
@@ -66,5 +69,8 @@
 <style>
 .espacio {
     height: 70px;
+}
+.espacio-search {
+    height: 20px;
 }
 </style>

@@ -10,7 +10,7 @@
               cols="12"
               >
                   <v-btn @click="goProfesionales()">
-                      <strong>Todos nuestros profesionales</strong>
+                      <strong>Nuestros profesionales</strong>
                   </v-btn>
               </v-col>
           </v-footer>
