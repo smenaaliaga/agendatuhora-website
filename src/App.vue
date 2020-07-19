@@ -69,4 +69,7 @@
         font-size: 1px;
     }
   }
+  .space-footer {
+    height: 100px;
+  }
 </style>

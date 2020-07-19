@@ -2,36 +2,25 @@
   <v-container>
     <div v-sticky sticky-offset="{top: 10}">
       <v-row>
-        <v-col cols="2">
+        <v-col cols="3" sm="2">
           <!--<div data-aos="fade-down" data-aos-anchor="#trigger">-->
-            <v-btn class="mx-2" text fab light large @click="backHome()" color="grey">
+            <v-btn class="mx-2" text fab light  @click="backHome()" color="grey">
               <icon-base width="200" height="200" icon-name="SEMID"><icon-Semid /></icon-base>
             </v-btn>
           <!--</div>-->
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" sm="8">
             <v-text-field
                 solo
                 rounded
-                placeholder="Busca tu profesional o especialidad"
+                append-icon="mdi-magnify"
+                placeholder="Escribe aquí"
                 outlined
-            />
+            ></v-text-field>
         </v-col>
-        <v-col cols="2" style="text-align: right;">
-            <v-btn rounded 
-                href="#"
-                color="#507F51"
-                dark
-                x-large
-                :elevation="3"
-            > 
-                <v-icon class="icon-right">mdi-magnify</v-icon>
-                <span class="mr-2">Buscar</span>
-            </v-btn>
-        </v-col>
-        <v-col cols="2" style="text-align: right;">
+        <v-col cols="3" sm="2" style="text-align: right;">
           <!--<div data-aos="fade-down" data-aos-anchor="#trigger">-->
-            <v-btn class="mx-2" fab light large color="#f1e345">
+            <v-btn class="mx-2" fab light color="#f1e345">
               <v-icon>mdi-file-document</v-icon>
             </v-btn>
           <!--</div>-->
@@ -63,9 +52,3 @@ export default {
   },
 } 
 </script>
-
-<style scoped>
-.space-footer {
-  height: 100px;
-}
-</style>

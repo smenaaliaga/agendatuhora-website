@@ -1,43 +1,30 @@
 <template>
     <v-container>
         <div class="espacio" />
-        <v-row>
-            
+        <v-row no-gutters>
             <v-col cols="12" sm="2" />
             <v-col cols="12" sm="8">
-                <div :class="!this.mobile ? 
-                'display-2 font-weight-thin text-center' : 
-                'display-1 font-weight-thin text-center'">
+                <h2 :class="!this.mobile ? 
+                'display-2 font-weight-light text-center' : 
+                'display-1 font-weight-light text-center'">
                     Encuentra al profesional o especialidad que necesitas
-                </div>
+                </h2>
             </v-col>
             <v-col cols="12" sm="2" />
         </v-row>
+        <div class="espacio-search" />
         <v-row no-gutters>
             <v-col cols="12" sm="2" />
-            <v-col cols="8" sm="6">
+            <v-col cols="12" sm="8">
 
                 <v-text-field
                     solo
                     rounded
+                    append-icon="mdi-magnify"
                     placeholder="Escribe aquí"
                     outlined
                 ></v-text-field>
                 
-            </v-col>
-            <v-col cols="4" sm="2">
-
-                <v-btn rounded 
-                    href="#"
-                    color="#507F51"
-                    dark
-                    x-large
-                    :elevation="3"
-                > 
-                    <v-icon class="icon-right">mdi-magnify</v-icon>
-                    <span class="text">Buscar</span>
-                </v-btn>
-            
             </v-col>
             <v-col cols="12" sm="2" />
         </v-row>
@@ -53,10 +40,9 @@
                 > 
                     <span class="mr-2">¿Necesitas Ayuda?</span>
                 </v-btn>
-
             </v-col>
-        
         </v-row>
+        <div class="space-footer" />
     </v-container>
 </template>
 
@@ -68,9 +54,9 @@
 
 <style>
 .espacio {
-    height: 70px;
+    height: 50px;
 }
 .espacio-search {
-    height: 20px;
+    height: 30px;
 }
 </style>
