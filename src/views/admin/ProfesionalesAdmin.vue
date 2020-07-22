@@ -1,10 +1,10 @@
 <template>
   <v-container>
         <div class="space" />
-        <h1>Lista de Profesionales</h1>
+        <h2>Lista de Profesionales</h2>
         <div class="space" />
         <router-link :to="{name: 'agregarProfesional'}">
-            <v-btn medium color="primary">Agregar Profesional</v-btn>
+            <v-btn medium color="primary">Agregar</v-btn>
         </router-link>
         <div class="space" />
         <v-simple-table>
@@ -25,7 +25,7 @@
                 <td>{{ profesional.profesion }}</td>
                 <td>{{ profesional.comuna }}</td>
                 <td>
-                    <v-btn color="warning" dark
+                    <v-btn color="green" dark
                     :to="{name: 'editarProfesional', params:{ id: profesional.id }}">
                         Editar
                     </v-btn>

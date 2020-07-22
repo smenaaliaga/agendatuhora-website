@@ -6,13 +6,13 @@
             <v-col cols="12" sm="8">
                 <h2 :class="!this.mobile ? 
                 'display-2 font-weight-light text-center' : 
-                'display-1 font-weight-light text-center'">
+                'title font-weight-medium text-center'">
                     Encuentra al profesional o especialidad que necesitas
                 </h2>
             </v-col>
             <v-col cols="12" sm="2" />
         </v-row>
-        <div class="espacio-search" />
+        <div class="espacio" />
         <v-row no-gutters>
             <v-col cols="12" sm="2" />
             <v-col cols="12" sm="8">
@@ -55,8 +55,5 @@
 <style>
 .espacio {
     height: 50px;
-}
-.espacio-search {
-    height: 30px;
 }
 </style>

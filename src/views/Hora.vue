@@ -1,23 +1,26 @@
 <template>
     <div>
-        <div class="space-init" />
+        <div :class="!this.mobile ? 'space-init' : ''" />
         <v-container>
             <v-row>
                 <v-col cols="12" sm="3">
                     <div align="center">
-                            <v-list-item-avatar :size="150">
-                                <img :src="profesional.avatar">
-                            </v-list-item-avatar>
-                        <div class="title font-weight-regular">
-                            {{ profesional.nombre }}
-                        </div>
-                        <div style="height: 5px" />
-                        <div class="font-weight-bold">
-                            {{ profesional.profesion }}
-                        </div> 
-                        <div class="font-weight-light">
-                            {{ profesional.comuna }}
-                        </div>
+                        <v-row>
+                            <v-col cols="4" sm="12">
+                                <v-list-item-avatar :size="!this.mobile ? 120 : 90">
+                                    <img :src="profesional.avatar">
+                                </v-list-item-avatar>
+                            </v-col>
+                            <v-col cols="8" sm="12">
+                                <div class="display-1 font-weight-regular">
+                                    {{ profesional.nombre }}
+                                </div>
+                                <div style="height: 5px" />
+                                <div class="font-weight-bold">
+                                    {{ profesional.profesion }}<div class="font-weight-light" style="display:inline;"> - {{ profesional.comuna }} </div>
+                                </div> 
+                            </v-col>
+                        </v-row>
                     </div>
                     <div class="space-bio" />
                     <v-divider />
@@ -30,7 +33,7 @@
                 <v-col cols="12" sm="5">
 
 <v-card>
-    <v-tabs fixed-tabs color="#007C92" >
+    <v-tabs fixed-tabs color="#007C92">
         <v-tab>
             <v-icon>mdi-calendar</v-icon>
         </v-tab>
@@ -38,7 +41,6 @@
         <v-tab>
             <v-icon>mdi-clock</v-icon>
         </v-tab>
-    
 
         <v-tab-item>
 
@@ -71,17 +73,13 @@
     </v-tabs>
 </v-card>
 
-
-
-
-
                 </v-col>
                 <v-col cols="12" sm="1" />
                 <v-col cols="12" sm="2">
 
                     <div align="center">
 
-                        <div style="height: 20px" />
+                        <div style="height: 10px" />
 
                         <div class="subtitle font-weight-regular">
                             Fecha
@@ -107,7 +105,7 @@
 
                         <div style="height: 50px" />
 
-                        <v-btn dark color="primary">Siguiente</v-btn>
+                        <v-btn dark color="primary">Agendar Hora</v-btn>
                     </div>
 
                     <div class="space-footer" />
@@ -122,6 +120,7 @@
 import { mapState, mapActions } from 'vuex'
 export default {
     name: 'Hora',
+    props: ['mobile'],
     data(){
         return {
             id: this.$route.params.id,

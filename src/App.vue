@@ -50,9 +50,6 @@
 </script>
 
 <style>
-  span {
-    font-size : medium;
-  }
 
   @media (max-width: 600px) { 
     span.icon {
@@ -64,9 +61,6 @@
       position : absolute;
       overflow : hidden;
       top      : -1000px; 
-    }
-    .display-2 {
-        font-size: 1px;
     }
   }
   .space-footer {

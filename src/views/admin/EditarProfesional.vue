@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <div class="space" />
-        <h1>Editar Profesional</h1>
+        <h2>Editar Profesional</h2>
         <div class="space" />
         <p class="text--secondary">id:  {{ profesional.id }}</p>
         <form @submit.prevent="editar">   

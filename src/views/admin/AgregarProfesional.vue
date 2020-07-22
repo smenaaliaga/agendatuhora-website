@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <div class="space" />
-    <h1>Añadir profesional</h1>
+        <h2>Añadir profesional</h2>
         <div class="space" />
         <form @submit.prevent="agregar">   
             <v-row>

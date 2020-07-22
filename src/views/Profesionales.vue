@@ -2,14 +2,14 @@
   <v-container>
     <div v-sticky sticky-offset="{top: 10}">
       <v-row>
-        <v-col cols="3" sm="2">
-          <!--<div data-aos="fade-down" data-aos-anchor="#trigger">-->
-            <v-btn class="mx-2" text fab light  @click="backHome()" color="grey">
+        <v-col :hidden="!mobile ? false : true" cols="3" sm="2">
+          <div data-aos="fade-down" data-aos-anchor="#trigger">
+            <v-btn class="mx-2" fab text large @click="backHome()" color="white">
               <icon-base width="200" height="200" icon-name="SEMID"><icon-Semid /></icon-base>
             </v-btn>
-          <!--</div>-->
+          </div>
         </v-col>
-        <v-col cols="6" sm="8">
+        <v-col cols="12" sm="8">
             <v-text-field
                 solo
                 rounded
@@ -18,17 +18,17 @@
                 outlined
             ></v-text-field>
         </v-col>
-        <v-col cols="3" sm="2" style="text-align: right;">
-          <!--<div data-aos="fade-down" data-aos-anchor="#trigger">-->
+        <v-col :hidden="!mobile ? false : true" cols="3" sm="2" style="text-align: right;">
+          <div data-aos="fade-down" data-aos-anchor="#trigger">
             <v-btn class="mx-2" fab light color="#f1e345">
               <v-icon>mdi-file-document</v-icon>
             </v-btn>
-          <!--</div>-->
+          </div>
         </v-col> 
       </v-row>
     </div>
 
-    <TarjetaProfesional />
+    <TarjetaProfesional :mobile="mobile" />
     
     <div class="space-footer" />
 
@@ -45,6 +45,7 @@ export default {
     IconSemid,
     TarjetaProfesional
   },
+  props: ['mobile'],
   methods: {
     backHome() {
       this.$router.push('/');

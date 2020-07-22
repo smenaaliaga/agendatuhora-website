@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { db } from '../firebase'
+import { db, auth } from '../firebase'
 
 Vue.use(Vuex);
 
@@ -15,10 +15,22 @@ export const store = new Vuex.Store({
             { comuna: 'Quilpué', abbr: 'QLP' },
             { comuna: 'Villa Alemana', abbr: 'VLN' },
         ],
+        // Usuarios
+        usuario: { email: '', nombre: '', password: '' },
+        error: null,
+        // Profesionales
         profesionales: [],
         profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: ''}
     },
     mutations: {
+        // Mutaciones de Usuarios
+        setUsuario(state, payload){
+            state.usuario =payload
+        },
+        setError(state, payload){
+            state.error = payload
+        },
+        // Mutaciones de Profesionales
         setProfesionales(state, profesionales){
             state.profesionales = profesionales
         },
@@ -33,20 +45,33 @@ export const store = new Vuex.Store({
         setEliminarProfesional(state, payload){
             state.profesionales = state.profesionales.filter(item => item.id !== payload)
         },
-        aux(){} // Borrar luego de pillar el problema
+        aux(){} // Void auxiliar
     },
     actions: {
+        // Actions Usuarios
+        crearUsuario({commit}, usuario){
+            auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
+                .then(res => {
+                    console.log(res)
+                    const usuario = {
+                        email: res.user.email,
+                        uid: res.user.uid
+                    }
+                    commit('setUsuario', usuario)
+                }).catch(error => {
+                    console.log(error)
+                    commit('setError',error)
+                })
+        },
+        // Actions Profesionaes
         getProfesionales({commit}) {
             const profesionales = []
             db.collection('profesionales').get()
             .then(res => {
                 res.forEach(doc =>{
-                    //console.log(doc.id)
-                    //console.log(doc.data())
                     let profesional = doc.data()
                     profesional.id = doc.id
                     profesionales.push(profesional)
-                    
                 })
                 commit('setProfesionales', profesionales)
             })
