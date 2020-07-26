@@ -16,7 +16,7 @@ export const store = new Vuex.Store({
             { comuna: 'Villa Alemana', abbr: 'VLN' },
         ],
         // Usuarios
-        usuario: { email: '', nombre: '', password: '' },
+        usuario: null,
         error: null,
         // Profesionales
         profesionales: [],
@@ -25,7 +25,7 @@ export const store = new Vuex.Store({
     mutations: {
         // Mutaciones de Usuarios
         setUsuario(state, payload){
-            state.usuario =payload
+            state.usuario = payload
         },
         setError(state, payload){
             state.error = payload
@@ -48,21 +48,50 @@ export const store = new Vuex.Store({
         aux(){} // Void auxiliar
     },
     actions: {
-        // Actions Usuarios
+        //
+        // USUARIOS
+        //
+        // Actions Crear Usuarios
         crearUsuario({commit}, usuario){
             auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
                 .then(res => {
-                    console.log(res)
                     const usuario = {
                         email: res.user.email,
                         uid: res.user.uid
                     }
                     commit('setUsuario', usuario)
                 }).catch(error => {
-                    console.log(error)
                     commit('setError',error)
                 })
         },
+        // Action Ingresar Usuario
+        ingresoUsuario({commit}, usuario){
+            auth.signInWithEmailAndPassword(usuario.email, usuario.password)
+            .then(res => {
+                const usuarioIngresado = {
+                    email: res.user.email,
+                    uid: res.user.uid
+                }
+                commit('setUsuario', usuarioIngresado)
+            })
+            .catch(error => {
+                commit('setError', error)
+            })
+        },
+        // Action Cerrar Sesion
+        cerrarSesion({commit}){
+            auth.signOut()
+            commit('aux')
+        },
+        detectarUsuario({commit}, usuario){
+            commit('setUsuario', usuario)
+        },
+        //editarUsuario({} usuario){
+        
+        //}
+        //
+        // PROFESIONALES
+        //
         // Actions Profesionaes
         getProfesionales({commit}) {
             const profesionales = []
@@ -117,7 +146,13 @@ export const store = new Vuex.Store({
             })
         }
     },
-    modules:{
-        
+    getters: {
+        existeUsuario(state){
+            if(state.usuario === null){
+                return false
+            }else{
+                return true
+            }
+        }
     }
 });

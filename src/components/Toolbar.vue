@@ -38,6 +38,7 @@
       
       <!-- BTN TU FICHA -->
       <v-btn rounded
+        v-if="!existeUsuario"
         href="#"
         color="#f1e345"
         light 
@@ -47,6 +48,18 @@
         <span class="text mr-2">Tu Usuario</span>
       </v-btn>
       <!-- FIN: BTN TU FICHA -->
+
+      <!-- BTN CERRAR SESION -->
+      <v-btn text small color="error" 
+            v-if="existeUsuario"
+            @click="cerrarSesion"><v-icon small class="icon">mdi-logout</v-icon><span class="text">Cerrar Sesion</span></v-btn>
+      <v-btn :rounded="cerrarSesion"
+            color="success" 
+            v-if="existeUsuario"
+            @click="sesion">
+            <v-icon small class="icon">mdi-file-document</v-icon>
+            <span class="text">Tu Fichas</span></v-btn>
+      <!-- FIN: BTN CERRAR SESION -->
 
     </v-toolbar>
   </v-card>
@@ -121,7 +134,7 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
         <v-tabs fixed-tabs color="#007C92" >
 
           <v-tab>
-           <v-icon class="icon">mdi-login</v-icon><span class="text"> &nbsp; Inicar Sesión</span>
+           <v-icon class="icon">mdi-login</v-icon><span class="text"> Inicar Sesión</span>
           </v-tab>
 
           <v-tab>
@@ -131,53 +144,58 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
           
           <v-tab-item>
 
-            <v-container>
-              <v-text-field
-                v-model="email"
-                :error-messages="emailErrors"
-                label="E-mail"
-                required
-                @input="$v.email.$touch()"
-                @blur="$v.email.$touch()"
-              ></v-text-field>
+            <form @submit.prevent="ingresar">
 
-              <v-text-field
-                v-model="password"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rulesPass.required, rulesPass.min]"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                label="Contraseña"
-                hint="Al menos 6 carácteres"
-                counter
-                @click:append="show1 = !show1"
-              ></v-text-field>
-            </v-container>
+              <v-container>
+                <v-text-field
+                  v-model="email"
+                  :error-messages="emailErrors"
+                  label="E-mail"
+                  required
+                  @input="$v.email.$touch()"
+                  @blur="$v.email.$touch()"
+                ></v-text-field>
 
-            <v-card-actions>
+                <v-text-field
+                  v-model="password"
+                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                  :rules="[rulesPass.required, rulesPass.min]"
+                  :type="show1 ? 'text' : 'password'"
+                  name="input-10-1"
+                  label="Contraseña"
+                  hint="Al menos 6 carácteres"
+                  counter
+                  @click:append="show1 = !show1"
+                ></v-text-field>
+              </v-container>
 
-              <v-spacer></v-spacer>
+              <v-card-actions>
 
-              <span class="text">
+                <v-spacer></v-spacer>
+
+                <span class="text">
+                  <v-btn
+                    color="gray"
+                    text
+                    small
+                    @click="login = false"
+                  >
+                    Cancelar
+                  </v-btn>
+                </span>
+
                 <v-btn
-                  color="gray"
+                  color="green darken-1"
+                  type="submit"
                   text
-                  small
-                  @click="login = false"
+                  large 
                 >
-                  Cancelar
+                  iniciar Sesión
                 </v-btn>
-              </span>
+                
+              </v-card-actions>
 
-              <v-btn
-                color="green darken-1"
-                text
-                large 
-                @click="login = false"
-              >
-                iniciar Sesión
-              </v-btn>
-            </v-card-actions>
+            </form>
 
           </v-tab-item>
           <!-- FIN: INICAR SESION -->
@@ -268,7 +286,7 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions, mapGetters } from 'vuex'
   import IconBase from './IconBase.vue'
   import IconSemidLetra from './icons/IconSemidLetra.vue'
   import IconSemid from '@/components/icons/IconSemid'
@@ -316,37 +334,42 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
     },
     methods: {
       backHome() {
-        if(this.$route.name == "hora") {
+        if(this.$route.name == "home") {
           location.reload()
         }else{
           this.$router.push('/')
         }
       },
-      submit () {
-        this.$v.$touch()
-      },
-      clear () {
-        this.$v.$reset()
-        this.name = ''
-        this.email = ''
-        this.select = null
-        this.checkbox = false
-      },
-      ...mapActions(['crearUsuario']),
+      ...mapActions(['crearUsuario', 'ingresoUsuario', 'cerrarSesion']),
       // Metodo creación
       crear(){
         this.crearUsuario({email: this.email, password: this.password_registro_1})
           .then(() => {
-            if(this.$route.name == "hora") {
+            if(this.$route.name == "home") {
               location.reload()
             }else{
-              this.$router.push('/')
+              this.$router.push({name: 'home'})
             }
           })
+      },
+      // Metodo ingreso
+      ingresar(){
+        this.ingresoUsuario({email: this.email, password: this.password})
+        .then(() => {
+          this.login = false
+        })
+      }
+    },
+    sesion(){
+      if(this.$route.name == "sesion") {
+        location.reload()
+      }else{
+        this.$router.push({name: 'sesion'})
       }
     },
     computed: {
       ...mapState(['ubicaciones','select','erro']),
+      ...mapGetters(['existeUsuario']),
       emailErrors () {
         const errors = []
         if (!this.$v.email.$dirty) return errors

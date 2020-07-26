@@ -84,7 +84,7 @@ export default {
         ...mapActions(['getProfesional','editProfesional']),
         editar(){
             this.editProfesional(this.profesional).then(() => {
-                this.$router.push({name: 'profesionalesadmin'})
+                
             })
         }
     },

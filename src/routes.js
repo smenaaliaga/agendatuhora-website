@@ -7,6 +7,8 @@ import EditarProfesional from './views/admin/EditarProfesional';
 import ProfesionalesAdmin from './views/admin/ProfesionalesAdmin';
 import AgregarProfesional from './views/admin/AgregarProfesional';
 
+// Usuario
+import Sesion from './views/user/Sesion';
 
 export const routes = [
     {
@@ -39,5 +41,12 @@ export const routes = [
         path: '/admin/profesionales', 
         name: 'profesionalesadmin',
         component: ProfesionalesAdmin
+    },
+    // Usuario
+    {
+        path: '/sesion', 
+        name: 'sesion',
+        component: Sesion,
+        meta: { requiresAuth: true }
     }
 ];

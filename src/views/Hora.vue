@@ -17,7 +17,8 @@
                                 </div>
                                 <div style="height: 5px" />
                                 <div class="font-weight-bold">
-                                    {{ profesional.profesion }}<div class="font-weight-light" style="display:inline;"> - {{ profesional.comuna }} </div>
+                                    {{ profesional.profesion }}
+                                    <div class="font-weight-light" style="display:inline;"> - {{ profesional.comuna }} </div>
                                 </div> 
                             </v-col>
                         </v-row>
@@ -32,46 +33,42 @@
                 <v-col cols="12" sm="1" />
                 <v-col cols="12" sm="5">
 
-<v-card>
-    <v-tabs fixed-tabs color="#007C92">
-        <v-tab>
-            <v-icon>mdi-calendar</v-icon>
-        </v-tab>
+                    <v-card>
+                        <v-tabs fixed-tabs color="#007C92">
+                            <v-tab>
+                                <v-icon>mdi-calendar</v-icon>
+                            </v-tab>
 
-        <v-tab>
-            <v-icon>mdi-clock</v-icon>
-        </v-tab>
+                            <v-tab>
+                                <v-icon>mdi-clock</v-icon>
+                            </v-tab>
 
-        <v-tab-item>
+                            <v-tab-item>
+                                <v-date-picker
+                                    v-model="date"
+                                    full-width
+                                    color="#007C92" 
+                                    :landscape="$vuetify.breakpoint.smAndUp"
+                                ></v-date-picker>       
+                            </v-tab-item>
 
-<v-date-picker
-      v-model="date"
-      full-width
-      color="#007C92" 
-      :landscape="$vuetify.breakpoint.smAndUp"
-    ></v-date-picker>       
+                            <v-tab-item>
+                                <v-time-picker
+                                    v-model="time"
+                                    color="#007C92" 
+                                    :allowed-hours="allowedHours"
+                                    :allowed-minutes="allowedMinutes"
+                                    :landscape="$vuetify.breakpoint.mdAndUp"
+                                    full-width
+                                    format="24hr"
+                                    scrollable
+                                    min="9:30"
+                                    max="22:15"
+                                ></v-time-picker>
+                            </v-tab-item>
 
-        </v-tab-item>
-
-        <v-tab-item>
-
-<v-time-picker
-      v-model="time"
-      color="#007C92" 
-      :allowed-hours="allowedHours"
-      :allowed-minutes="allowedMinutes"
-      :landscape="$vuetify.breakpoint.mdAndUp"
-      full-width
-      format="24hr"
-      scrollable
-      min="9:30"
-      max="22:15"
-    ></v-time-picker>
-
-        </v-tab-item>
-
-    </v-tabs>
-</v-card>
+                        </v-tabs>
+                    </v-card>
 
                 </v-col>
                 <v-col cols="12" sm="1" />
@@ -88,7 +85,7 @@
                         <div style="height: 5px" />
 
                         <div class="title font-weight-bold">
-                            Lunes 13 de Julio
+                            {{ date }}
                         </div>
 
                         <div style="height: 30px" />
@@ -100,7 +97,7 @@
                         <div style="height: 5px" />
 
                         <div class="title font-weight-bold">
-                            13:30
+                            {{ time }}
                         </div>
 
                         <div style="height: 50px" />
@@ -143,7 +140,6 @@ export default {
     },
     computed: {
         ...mapState(['profesional']),
-
     }
 }
 </script>
