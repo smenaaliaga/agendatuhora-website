@@ -1,6 +1,7 @@
 import Home from './views/Home.vue';
 import Profesionales from './views/Profesionales';
 import Hora from './views/Hora';
+import Confirmar from './views/Confirmar';
 
 // Administracion
 import EditarProfesional from './views/admin/EditarProfesional';
@@ -25,6 +26,11 @@ export const routes = [
         path: '/profesionales/hora/:id', 
         name: 'hora',
         component: Hora
+    },
+    {
+        path: '/profesionales/confirmar/:id', 
+        name: 'confirmar',
+        component: Confirmar
     },
     // Administracion
     {

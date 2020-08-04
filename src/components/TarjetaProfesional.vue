@@ -71,7 +71,7 @@
             this.$router.push({name: 'hora', params: {id: id} });
         }
     }
-    }
+}
 </script>
 
 <style scoped>

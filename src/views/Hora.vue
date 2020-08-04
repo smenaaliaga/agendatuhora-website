@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div :class="!this.mobile ? 'space-init' : ''" />
         <v-container>
             <v-row>
                 <v-col cols="12" sm="3">
@@ -34,36 +33,38 @@
                 <v-col cols="12" sm="5">
 
                     <v-card>
-                        <v-tabs fixed-tabs color="#007C92">
-                            <v-tab>
-                                <v-icon>mdi-calendar</v-icon>
+                        <v-tabs fixed-tabs color="#007C92" v-model='tab'>
+                            <v-tab ripple href='#tab-1'>
+                                <v-icon>mdi-calendar</v-icon><span class="text"> Fecha</span>
                             </v-tab>
 
-                            <v-tab>
-                                <v-icon>mdi-clock</v-icon>
+                            <v-tab ripple href='#tab-2'>
+                                <v-icon>mdi-clock</v-icon><span class="text"> Hora</span>
                             </v-tab>
 
-                            <v-tab-item>
+                            <v-tab-item value='tab-1'>
                                 <v-date-picker
                                     v-model="date"
                                     full-width
                                     color="#007C92" 
-                                    :landscape="$vuetify.breakpoint.smAndUp"
+                                    locale="es"
+                                    :allowed-dates="allowedWeeks"
+                                    :min="minDate"
+                                    :max="maxDate"
+                                    @change="changeTab()"
                                 ></v-date-picker>       
                             </v-tab-item>
 
-                            <v-tab-item>
+                            <v-tab-item value='tab-2'>
                                 <v-time-picker
                                     v-model="time"
                                     color="#007C92" 
-                                    :allowed-hours="allowedHours"
-                                    :allowed-minutes="allowedMinutes"
-                                    :landscape="$vuetify.breakpoint.mdAndUp"
                                     full-width
                                     format="24hr"
                                     scrollable
-                                    min="9:30"
-                                    max="22:15"
+                                    :min="horaMinima()"
+                                    :max="horaMaxima()"
+                                    :allowed-minutes="allowedStep"
                                 ></v-time-picker>
                             </v-tab-item>
 
@@ -102,7 +103,7 @@
 
                         <div style="height: 50px" />
 
-                        <v-btn dark color="primary">Agendar Hora</v-btn>
+                        <v-btn @click="goConfirmar(profesional.id, date, time)" dark color="success">Agendar</v-btn>
                     </div>
 
                     <div class="space-footer" />
@@ -115,6 +116,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+
 export default {
     name: 'Hora',
     props: ['mobile'],
@@ -122,24 +124,61 @@ export default {
         return {
             id: this.$route.params.id,
 
-            date: new Date().toISOString().substr(0, 10),
-            time: '13:30',
-            timeStep: '10:10',
+            tab: 'tab-1',
+            
+            // HORA
+            time: '15:30',
+            
+            // FECHA
+            date: '',
+            minDate: '',
+            maxDate: '',
+
+            loading: true,
+            rows: []    
         }
     },
-    created(){
+    async created(){
+
         this.getProfesional(this.id)
+
+        // FECHAS
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 4);
+        
+        this.minDate = currentDate.toISOString().substr(0, 10);
+        this.date = currentDate.toISOString().substr(0, 10);
+
+        currentDate.setDate(currentDate.getDate() + 60);
+        this.maxDate = currentDate.toISOString().substr(0, 10);
     },
     methods: {
         ...mapActions(['getProfesional']),
+        
+        allowedWeeks: function(val){
+            return this.profesional.dias_disponibles[(new Date(val)).getDay()] === true
+        },
 
+        changeTab(){
+            setTimeout(() => { this.tab='tab-2'; }, 500);
+        },
 
-        allowedHours: v => v % 2,
-        allowedMinutes: v => v >= 10 && v <= 50,
-        allowedStep: m => m % 10 === 0,
+        horaMinima() {
+            return this.profesional.hora_inicio[(new Date(this.date)).getDay()]
+        },
+        horaMaxima() {
+            return this.profesional.hora_fin[(new Date(this.date)).getDay()]
+        },
+        allowedStep: m => m % 5 === 0,
+
+        // BOTON CONFIRMAR
+        goConfirmar(id, fecha, hora) {
+            this.$router.push({name: 'confirmar', params: {id: id, fecha: fecha, hora: hora} });
+        }
+        
     },
     computed: {
-        ...mapState(['profesional']),
+        ...mapState(['profesional'])
     }
 }
 </script>

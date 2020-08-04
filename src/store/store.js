@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
         error: null,
         // Profesionales
         profesionales: [],
-        profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: ''}
+        profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: '', dias_disponibles: '', hora_inicio: '', hora_fin: ''}
     },
     mutations: {
         // Mutaciones de Usuarios
@@ -120,7 +120,10 @@ export const store = new Vuex.Store({
                 profesion: profesional.profesion,
                 comuna: profesional.comuna,
                 avatar: profesional.avatar,
-                bio: profesional.bio
+                bio: profesional.bio,
+                dias_disponibles: profesional.dias_disponibles,
+                hora_inicio: profesional.hora_inicio,
+                hora_fin: profesional.hora_fin
             }).then(() => {
                 commit('aux', profesional)
             })
@@ -132,7 +135,10 @@ export const store = new Vuex.Store({
                 profesion: profesional.profesion,
                 comuna: profesional.comuna,
                 avatar: profesional.avatar,
-                bio: profesional.bio
+                bio: profesional.bio,
+                dias_disponibles: profesional.dias_disponibles,
+                hora_inicio: profesional.hora_inicio,
+                hora_fin: profesional.hora_fin
             })
             .then(doc => {
                 console.log(doc.id)

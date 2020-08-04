@@ -53,7 +53,7 @@
       <v-btn text small color="error" 
             v-if="existeUsuario"
             @click="cerrarSesion"><v-icon small class="icon">mdi-logout</v-icon><span class="text">Cerrar Sesion</span></v-btn>
-      <v-btn :rounded="cerrarSesion"
+      <v-btn rounded
             color="success" 
             v-if="existeUsuario"
             @click="sesion">
@@ -358,14 +358,14 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
         .then(() => {
           this.login = false
         })
-      }
-    },
-    sesion(){
-      if(this.$route.name == "sesion") {
-        location.reload()
-      }else{
-        this.$router.push({name: 'sesion'})
-      }
+      },
+      sesion(){
+        if(this.$route.name == "sesion") {
+          location.reload()
+        }else{
+          this.$router.push({name: 'sesion'})
+        }
+      },
     },
     computed: {
       ...mapState(['ubicaciones','select','erro']),
