@@ -1,101 +1,84 @@
 <template>
-    <v-container>
-        <div style="height: 20px;" />
-        <v-row>
-            <v-col cols="12" sm="4">
-                <div align="center">
-                    <h2>¡Estas a un paso!</h2>
-                        {{ $route.params.id }}
-                    <h3>Fecha</h3>
-                        {{ $route.params.fecha }}
-                    <h3>Hora</h3>
-                        {{ $route.params.hora }}
-                </div>
+  <v-container>
+    <div style="height: 20px;" />
+    <v-row>
+      <v-col cols="12" sm="4">
+        <h2 class="text-center">¡Estas a un paso!</h2>
+        <div style="height: 30px;"/>
 
-            </v-col>
-            <v-col cols="12" sm="4">
-                <h3>Confirma tu hora solo iniciando sesión</h3>
-                <v-text-field
-                    v-model="email"
-                    label="email"
-                    required
-                ></v-text-field>
-                <v-text-field
-                  v-model="password"
-                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rulesPass.required, rulesPass.min]"
-                  :type="show1 ? 'text' : 'password'"
-                  name="input-10-1"
-                  label="Contraseña"
-                  hint="Al menos 6 carácteres"
-                  counter
-                  @click:append="show1 = !show1"
-                ></v-text-field>
-                <v-btn
-                  color="green darken-1"
-                  type="submit"
-                  text
-                  large 
-                >
-                  iniciar Sesión
-                </v-btn>
-            </v-col>
-            <v-col cols="12" sm="4">
-                <h3>Confirma tu hora ingresando tus datos</h3>
-                <v-text-field
-                    v-model="nombre"
-                    label="Nombre"
-                    required
-                ></v-text-field>
-                <v-text-field
-                    v-model="rut"
-                    label="RUT"
-                    required
-                ></v-text-field>
-                <v-text-field
-                    v-model="email"
-                    label="Email"
-                    required
-                ></v-text-field>
-                <v-text-field
-                    v-model="direccion"
-                    label="Direccion"
-                    required
-                ></v-text-field>
-                <div align="center">
-                    <v-btn dark color="success">Confirmar hora</v-btn>
-                </div>
-            </v-col>
-        </v-row>
-    </v-container>
+        Te atenderás con
+        <div style="height: 15px;"/>
+
+        <strong>Nombre:</strong> {{ profesional.nombre }} {{ profesional.apellido }}
+        <div style="height: 3px;"/>
+        <strong>Profesión:</strong> {{ profesional.profesion }}
+        <div style="height: 15px;"/>
+        El día y la hora
+        <div style="height: 15px;"/>
+        <strong>Fecha:</strong> {{ $route.params.fecha }}
+        <div style="height: 3px;"/>
+        <strong>Hora:</strong> {{ $route.params.hora }}
+      </v-col>
+      <v-col cols="12" sm="4">
+        <h3 v-if="!existeUsuario">Confirma tu hora solo iniciando sesión</h3>
+        <h3 v-if="existeUsuario" class="text-center">Ha iniciado sesión</h3>
+        <div class="text-center">
+          <div style="height: 20px;"/>
+          <v-btn rounded
+            v-if="!existeUsuario"
+            color="#f1e345"
+            light 
+            @click="setearLogin(true)"
+          >
+            <v-icon class="icon">mdi-account</v-icon>
+            <span class="mr-2">Tu Usuario</span>
+          </v-btn>
+          <v-btn text small color="error" 
+            v-if="existeUsuario"
+            @click="cerrarSesion">
+            <v-icon small class="icon">mdi-logout</v-icon><span class="text">Cerrar Sesion</span>
+          </v-btn>
+        </div>
+      </v-col>
+      <v-col cols="12" sm="4">
+        <h3>Confirma tu hora ingresando tus datos</h3>
+        <v-text-field
+            v-model="datosUsuario.nombre"
+            label="Nombre"
+            required
+        ></v-text-field>
+        <v-text-field
+            v-model="datosUsuario.email"
+            label="Email"
+            required
+        ></v-text-field>
+        <v-text-field
+            v-model="datosUsuario.direccion"
+            label="Direccion"
+            required
+        ></v-text-field>
+        <div align="center">
+          <v-btn dark color="success">Confirmar hora</v-btn>
+        </div>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
-import { required, email } from 'vuelidate/lib/validators'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
-    name: 'Confirmar',
-    data () {
-      return {
-        password: '',
-        email: '',
-        show1: false,
-        rulesPass: {
-          required: value => !!value || 'Requerido.',
-          min: v => v.length >= 6 || 'Min 6 caracteres',
-        },
-      }
-    },
-    mixins: [validationMixin],
-    validations: {
-      email: { required, email },
-      select: { required },
-      checkbox: {
-        checked (val) {
-          return val
-        },
-      },
-    },
+  name: 'Confirmar',
+  methods: {
+    ...mapActions(['cerrarSesion','getProfesional','setearLogin','getDatosUsuario'])
+  },
+  computed: {
+    ...mapState(['profesional','usuario','datosUsuario']),
+    ...mapGetters(['existeUsuario']),
+  },
+  created(){
+    this.getProfesional(this.$route.params.id)
+  },
 }
 </script>

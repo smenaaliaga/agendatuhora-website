@@ -1,31 +1,45 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { db, auth } from '../firebase'
+import createPersistedState from 'vuex-persistedstate'
+
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+    plugins: [createPersistedState({
+        storage: window.sessionStorage,
+    })],
     state: {
         select: { comuna: 'Viña del Mar', abbr: 'VDM' },
         ubicaciones: [
-            { comuna: 'Valparaíso', abbr: 'VLP' },
             { comuna: 'Viña del Mar', abbr: 'VDM' },
             { comuna: 'Reñaca', abbr: 'RÑC' },
             { comuna: 'Con Con', abbr: 'CNCN' },
             { comuna: 'Quilpué', abbr: 'QLP' },
             { comuna: 'Villa Alemana', abbr: 'VLN' },
         ],
+        // Dialogs
+        login: false,
         // Usuarios
         usuario: null,
+        datosUsuario: {  uid: '', email: '', nombre: '', comuna: '',  direccion: ''},
         error: null,
         // Profesionales
         profesionales: [],
         profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: '', dias_disponibles: '', hora_inicio: '', hora_fin: ''}
     },
     mutations: {
+        // Mutaciones Login
+        setLogin(state, payload){
+            state.login = payload
+        },
         // Mutaciones de Usuarios
-        setUsuario(state, payload){
-            state.usuario = payload
+        setUsuario(state, usuario){
+            state.usuario = usuario
+        },
+        setDatosUsuario(state, datosUsuario){
+            state.datosUsuario = datosUsuario
         },
         setError(state, payload){
             state.error = payload
@@ -51,28 +65,69 @@ export const store = new Vuex.Store({
         //
         // USUARIOS
         //
+        setearLogin({commit},bool){
+            commit('setLogin', bool)
+        },
+        //
+        // USUARIOS
+        //
         // Actions Crear Usuarios
-        crearUsuario({commit}, usuario){
-            auth.createUserWithEmailAndPassword(usuario.email, usuario.password)
+        crearUsuario({commit}, dataUser){
+            auth.createUserWithEmailAndPassword(dataUser.email, dataUser.password)
                 .then(res => {
                     const usuario = {
-                        email: res.user.email,
-                        uid: res.user.uid
+                        uid: res.user.uid,
+                        email: res.user.email
                     }
+                    db.collection('usuarios').add({
+                        uid: res.user.uid,
+                        email: res.user.email,
+                        nombre: dataUser.nombre,
+                        direccion: dataUser.direccion,
+                        comuna: dataUser.comuna
+                    })
                     commit('setUsuario', usuario)
-                }).catch(error => {
+                  }).catch(error => {
                     commit('setError',error)
                 })
         },
-        // Action Ingresar Usuario
-        ingresoUsuario({commit}, usuario){
-            auth.signInWithEmailAndPassword(usuario.email, usuario.password)
+        // Obtener usuario con Login
+        getDatosUsuario({commit, state}){
+            let uid = state.usuario.uid
+            console.log(uid)
+            const datos = null
+            db.collection('usuarios').where("uid", "==", uid).get()
             .then(res => {
-                const usuarioIngresado = {
-                    email: res.user.email,
-                    uid: res.user.uid
-                }
-                commit('setUsuario', usuarioIngresado)
+                res.forEach(doc => {
+                    let user = doc.data()
+                    user.id =  doc.id
+                    datos.push(user)
+                })
+                commit('setDatosUsuario', datos)
+            })
+        },
+        // Action Ingresar Usuario
+        ingresoUsuario({commit}, user){
+            auth.signInWithEmailAndPassword(user.email, user.password)
+            .then(res => {
+                db.collection('usuarios').where("uid", "==", res.user.uid).get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(function(doc) {
+                        let user = doc.data()
+                        user.id =  doc.id
+                        const usuario = {
+                            uid: res.user.uid,
+                            email: res.user.email,
+                            nombre: user.nombre,
+                            comuna: user.comuna,
+                            direccion: user.direccion
+                        }
+                        commit('setDatosUsuario', usuario)
+                    })
+                })
+                .catch(error => {
+                    commit('setError',error)
+                })
             })
             .catch(error => {
                 commit('setError', error)
@@ -81,14 +136,12 @@ export const store = new Vuex.Store({
         // Action Cerrar Sesion
         cerrarSesion({commit}){
             auth.signOut()
-            commit('aux')
+            sessionStorage.clear()
+            commit('setDatosUsuario', { uid: '', email: '', nombre: '', comuna: '',  direccion: '' })
         },
         detectarUsuario({commit}, usuario){
             commit('setUsuario', usuario)
         },
-        //editarUsuario({} usuario){
-        
-        //}
         //
         // PROFESIONALES
         //

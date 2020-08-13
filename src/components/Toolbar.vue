@@ -19,16 +19,16 @@
 
       <!-- SELECION DE COMUNA -->
       <v-select
-          v-model="select"
-          :items="ubicaciones"
-          item-text="comuna"
-          item-value="abbr"
-          menu-props="auto"
-          hint="Selecciona tu comuna"
-          persistent-hint
-          :prepend-icon="!this.mobile ? 'mdi-map-marker' : ''"
-          single-line
-          size="1px"
+        v-model="select"
+        :items="ubicaciones"
+        item-text="comuna"
+        item-value="abbr"
+        menu-props="auto"
+        hint="Selecciona tu comuna"
+        persistent-hint
+        :prepend-icon="!this.mobile ? 'mdi-map-marker' : ''"
+        single-line
+        size="1px"
       ></v-select>
       <!-- FIN: SELECION DE COMUNA -->
       
@@ -39,10 +39,9 @@
       <!-- BTN TU FICHA -->
       <v-btn rounded
         v-if="!existeUsuario"
-        href="#"
         color="#f1e345"
         light 
-        @click="login = true"
+        @click="setearLogin(true)"
       >
         <v-icon class="icon">mdi-account</v-icon>
         <span class="text mr-2">Tu Usuario</span>
@@ -51,14 +50,17 @@
 
       <!-- BTN CERRAR SESION -->
       <v-btn text small color="error" 
-            v-if="existeUsuario"
-            @click="cerrarSesion"><v-icon small class="icon">mdi-logout</v-icon><span class="text">Cerrar Sesion</span></v-btn>
+        v-if="existeUsuario"
+        @click="cerrarSesion">
+        <v-icon small class="icon">mdi-logout</v-icon><span class="text">Cerrar Sesion</span>
+      </v-btn>
       <v-btn rounded
-            color="success" 
-            v-if="existeUsuario"
-            @click="sesion">
-            <v-icon small class="icon">mdi-file-document</v-icon>
-            <span class="text">Tu Fichas</span></v-btn>
+        color="success" 
+        v-if="existeUsuario"
+        @click="sesion()">
+        <v-icon small class="icon">mdi-file-document</v-icon>
+        <span class="text">Tu Fichas</span>
+      </v-btn>
       <!-- FIN: BTN CERRAR SESION -->
 
     </v-toolbar>
@@ -121,266 +123,56 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
     </v-card>
   </v-dialog>
   <!--  FIN: DIALOGO -->
-
-  <!--  DIALOGO SESION -->
-  <v-dialog
-    v-model="login"
-    max-width="600"
-  >
-    <v-card>
-    
-      <v-card-text>
-
-        <v-tabs fixed-tabs color="#007C92" >
-
-          <v-tab>
-           <v-icon class="icon">mdi-login</v-icon><span class="text"> Inicar Sesión</span>
-          </v-tab>
-
-          <v-tab>
-            <v-icon class="icon">mdi-account-plus</v-icon><span class="text"> Registrarses</span>
-          </v-tab>
-
-          
-          <v-tab-item>
-
-            <form @submit.prevent="ingresar">
-
-              <v-container>
-                <v-text-field
-                  v-model="email"
-                  :error-messages="emailErrors"
-                  label="E-mail"
-                  required
-                  @input="$v.email.$touch()"
-                  @blur="$v.email.$touch()"
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="password"
-                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="[rulesPass.required, rulesPass.min]"
-                  :type="show1 ? 'text' : 'password'"
-                  name="input-10-1"
-                  label="Contraseña"
-                  hint="Al menos 6 carácteres"
-                  counter
-                  @click:append="show1 = !show1"
-                ></v-text-field>
-              </v-container>
-
-              <v-card-actions>
-
-                <v-spacer></v-spacer>
-
-                <span class="text">
-                  <v-btn
-                    color="gray"
-                    text
-                    small
-                    @click="login = false"
-                  >
-                    Cancelar
-                  </v-btn>
-                </span>
-
-                <v-btn
-                  color="green darken-1"
-                  type="submit"
-                  text
-                  large 
-                >
-                  iniciar Sesión
-                </v-btn>
-                
-              </v-card-actions>
-
-            </form>
-
-          </v-tab-item>
-          <!-- FIN: INICAR SESION -->
-
-          <!-- REGISTRO -->
-          <v-tab-item>
-
-            <form @submit.prevent="crear">
-            
-              <v-text-field
-                v-model="email"
-                :error-messages="emailErrors"
-                label="E-mail"
-                required
-                @input="$v.email.$touch()"
-                @blur="$v.email.$touch()"
-              ></v-text-field>
-
-              <v-text-field
-                v-model="nombre"
-                label="Nombre"
-                required
-              ></v-text-field>
-
-              <v-text-field
-                v-model="password_registro_1"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rulesPass.required, rulesPass.min]"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                label="Contraseña"
-                hint="Al menos 6 carácteres"
-                counter
-                @click:append="show1 = !show1"
-              ></v-text-field>
-
-              <v-text-field
-                v-model="password_registro_2"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rulesPass.required, rulesPass.min]"
-                :type="show1 ? 'text' : 'password'"
-                name="input-10-1"
-                label="Confirmar Contraseña"
-                hint="Al menos 6 carácteres"
-                counter
-                @click:append="show1 = !show1"
-              ></v-text-field>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-
-                <span class="text">
-                  <v-btn
-                    color="gray"
-                    text
-                    medium
-                    @click="login = false"
-                  >
-                    Cancelar
-                  </v-btn>
-                </span>
-
-                <v-btn
-                  color="green darken-1"
-                  type="submit"
-                  text
-                  large 
-                  :disabled='!desactivar'
-                >
-                  Registrar
-                </v-btn>
-              </v-card-actions>
-            
-            </form>
-
-          </v-tab-item>
-          <!-- FIN: REGISTRO -->
-
-        </v-tabs>
-
-      </v-card-text>
-
-    </v-card>
-  </v-dialog>
-  <!--  FIN: INICIO SESION -->
   
+  <Sesion />
+
 </div>
 </template>
 
 <script>
   import { mapState, mapActions, mapGetters } from 'vuex'
+
   import IconBase from './IconBase.vue'
   import IconSemidLetra from './icons/IconSemidLetra.vue'
-  import IconSemid from '@/components/icons/IconSemid'
+  import IconSemid from './icons/IconSemid'
+  import Sesion from './Sesion'
 
-  import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
-  
   export default {
     name: 'Toolbar',
-    mixins: [validationMixin],
     components: {
       IconBase,
       IconSemid,
-      IconSemidLetra
-    },
-    validations: {
-      name: { required, maxLength: maxLength(10) },
-      email: { required, email },
-      select: { required },
-      checkbox: {
-        checked (val) {
-          return val
-        },
-      },
+      IconSemidLetra,
+      Sesion
     },
     props: ['mobile'],
     data () {
       return {
         // Dialogs
-        dialog: false,
-        login: false,
-        // Inicio Sesion
-        show1: false,
-        password: '',
-        email: '',
-        // Registro
-        nombre: '',
-        password_registro_1:'',
-        password_registro_2: '',
-        rulesPass: {
-          required: value => !!value || 'Requerido.',
-          min: v => v.length >= 6 || 'Min 6 caracteres',
-        },
+        dialog: false
       }
     },
+    sesion(){
+        if(this.$route.name == "sesion") {
+            location.reload()
+        }else{
+            this.$router.push({name: 'sesion'})
+        }
+    },
     methods: {
-      backHome() {
+    ...mapActions(['cerrarSesion','setearLogin','setearLogin']),
+    backHome() {
         if(this.$route.name == "home") {
           location.reload()
         }else{
           this.$router.push('/')
         }
       },
-      ...mapActions(['crearUsuario', 'ingresoUsuario', 'cerrarSesion']),
-      // Metodo creación
-      crear(){
-        this.crearUsuario({email: this.email, password: this.password_registro_1})
-          .then(() => {
-            if(this.$route.name == "home") {
-              location.reload()
-            }else{
-              this.$router.push({name: 'home'})
-            }
-          })
-      },
-      // Metodo ingreso
-      ingresar(){
-        this.ingresoUsuario({email: this.email, password: this.password})
-        .then(() => {
-          this.login = false
-        })
-      },
-      sesion(){
-        if(this.$route.name == "sesion") {
-          location.reload()
-        }else{
-          this.$router.push({name: 'sesion'})
-        }
-      },
     },
     computed: {
-      ...mapState(['ubicaciones','select','erro']),
-      ...mapGetters(['existeUsuario']),
-      emailErrors () {
-        const errors = []
-        if (!this.$v.email.$dirty) return errors
-        !this.$v.email.email && errors.push('Must be valid e-mail')
-        !this.$v.email.required && errors.push('E-mail is required')
-        return errors
-      },
-      desactivar(){
-          return this.password_registro_1 === this.password_registro_2 && this.password_registro_1.trim() !== ''
-      }
-    }
+      ...mapState(['ubicaciones','select','login']),
+      ...mapGetters(['existeUsuario'])
+    },
   }
 </script>
 

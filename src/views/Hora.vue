@@ -127,24 +127,21 @@ export default {
             tab: 'tab-1',
             
             // HORA
-            time: '15:30',
-            
-            // FECHA
-            date: '',
+            time: '',
             minDate: '',
             maxDate: '',
-
-            loading: true,
-            rows: []    
+            
+            // FECHA
+            date: ''
         }
     },
-    async created(){
+    created(){
 
         this.getProfesional(this.id)
 
         // FECHAS
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + 4);
+        currentDate.setDate(currentDate.getDate()+1);
         
         this.minDate = currentDate.toISOString().substr(0, 10);
         this.date = currentDate.toISOString().substr(0, 10);
@@ -156,7 +153,7 @@ export default {
         ...mapActions(['getProfesional']),
         
         allowedWeeks: function(val){
-            return this.profesional.dias_disponibles[(new Date(val)).getDay()] === true
+            return this.profesional.dias_disponibles[(new Date(val)).getDay()]
         },
 
         changeTab(){
@@ -164,6 +161,7 @@ export default {
         },
 
         horaMinima() {
+            this.time = this.profesional.hora_inicio[(new Date(this.date)).getDay()]
             return this.profesional.hora_inicio[(new Date(this.date)).getDay()]
         },
         horaMaxima() {
