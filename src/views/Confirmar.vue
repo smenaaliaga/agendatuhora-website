@@ -42,26 +42,69 @@
       </v-col>
       <v-col cols="12" sm="4">
         <h3>Confirma tu hora ingresando tus datos</h3>
-        <v-text-field
-            v-model="datosUsuario.nombre"
-            label="Nombre"
-            required
-        ></v-text-field>
-        <v-text-field
-            v-model="datosUsuario.email"
-            label="Email"
-            required
-        ></v-text-field>
-        <v-text-field
-            v-model="datosUsuario.direccion"
-            label="Direccion"
-            required
-        ></v-text-field>
-        <div align="center">
-          <v-btn dark color="success">Confirmar hora</v-btn>
-        </div>
+        <form @submit.prevent="agendar()">
+          <v-text-field
+              v-model="datosUsuario.nombre"
+              label="Nombre"
+              required
+          ></v-text-field>
+          <v-text-field
+              v-model="datosUsuario.email"
+              label="Email"
+              required
+          ></v-text-field>
+          <v-text-field
+              v-model="datosUsuario.direccion"
+              label="Direccion"
+              required
+          ></v-text-field>
+          <div align="center">
+            <v-btn type="submit" dark color="success">Confirmar hora</v-btn>
+          </div>
+        </form>
       </v-col>
     </v-row>
+
+
+    <v-dialog v-model="fin" persistent max-width="600">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="primary"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Open Dialog
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title class="headline">
+        </v-card-title>
+        <div class="text-center">
+          <v-icon x-large class="icon" style="color: green;">mdi-check-all</v-icon>
+          <div style="height:10px;" />
+          <h3>¡Felicidades, se ha procesado tu hora médica a domicilio!</h3>
+          <div style="height:20px;" />
+          Has agendado con {{ profesional.nombre }} {{ profesional.apellido }} 
+          <div style="height:5px;" />
+          De profesión {{ profesional.profesion }}
+          <div style="height:15px;" />
+          Te visitará la fecha de {{ $route.params.fecha }} y hora {{ $route.params.hora }} 
+          <div style="height:15px;" />
+          La visita se realizará en la dirección {{ this.datosUsuario.direccion }}
+          <div style="height:20px;" />
+          <strong>¡Pronto te contactaremos!</strong>
+          <div style="height:20px;" />
+        </div>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="fin = false">btn</v-btn>
+          <v-btn color="blue darken-1" text @click="inicio()">Volver al inicio</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
   </v-container>
 </template>
 
@@ -70,11 +113,38 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Confirmar',
+  data(){
+    return{
+      fin: false
+    }
+  },  
   methods: {
-    ...mapActions(['cerrarSesion','getProfesional','setearLogin','getDatosUsuario'])
+    ...mapActions(['cerrarSesion','getProfesional','setearLogin','getDatosUsuario','agregarAgenda']),
+    agendar(){
+      /*
+      this.agregarAgenda({
+        id_profesional: this.$route.params.id,
+        id_paciente: this.datosUsuario.uid,
+        nombre_paciente: this.datosUsuario.nombre,
+        email_paciente: this.datosUsuario.email,
+        direccion_paciente: this.datosUsuario.direccion,
+        comuna_paciente: this.ubicaciones.comuna,
+        fecha: this.$route.params.fecha,
+        hora: this.$route.params.hora
+      })
+      .then(() => {
+        this.fin = true
+      })
+      */
+      this.fin = true
+    }
+  },
+  inicio(){
+    this.fin = true
+    this.$router.push({name: 'home'})
   },
   computed: {
-    ...mapState(['profesional','usuario','datosUsuario']),
+    ...mapState(['profesional','usuario','datosUsuario','ubicaciones']),
     ...mapGetters(['existeUsuario']),
   },
   created(){

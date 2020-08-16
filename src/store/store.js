@@ -203,7 +203,25 @@ export const store = new Vuex.Store({
             .then(() => {
                 commit('setEliminarProfesional', id)
             })
-        }
+        },
+        //
+        // AGENDAR
+        //
+        // Agregar Agenda Medica
+        agregarAgenda({commit}, agenda){
+            db.collection('agendas').add({
+                id_profesional: agenda.id_profesional,
+                id_paciente: agenda.id_paciente,
+                nombre_paciente: agenda.nombre_paciente,
+                email_paciente: agenda.email_paciente,
+                direccion_paciente: agenda.direccion_paciente,
+                fecha: agenda.fecha,
+                hora: agenda.hora
+            })
+            .then(() => {
+                commit('aux', agenda)
+            })
+        },
     },
     getters: {
         existeUsuario(state){
