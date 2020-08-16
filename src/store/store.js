@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
         storage: window.sessionStorage,
     })],
     state: {
-        select: { comuna: 'Viña del Mar', abbr: 'VDM' },
+        select_comuna: { comuna: 'Viña del Mar', abbr: 'VDM' },
         ubicaciones: [
             { comuna: 'Viña del Mar', abbr: 'VDM' },
             { comuna: 'Reñaca', abbr: 'RÑC' },
@@ -30,6 +30,10 @@ export const store = new Vuex.Store({
         profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: '', dias_disponibles: '', hora_inicio: '', hora_fin: ''}
     },
     mutations: {
+        // Mutaciones Comuna Seleccionada
+        setComunaSeleccionada(state, payload){
+            state.select_comuna = payload
+        },
         // Mutaciones Login
         setLogin(state, payload){
             state.login = payload
@@ -63,9 +67,15 @@ export const store = new Vuex.Store({
     },
     actions: {
         //
+        // COMUNA SELECCIONADA
+        //
+        setearComunaSeleccionada({commit}, select_comuna){
+            commit('setComunaSeleccionada', select_comuna)
+        },
+        //
         // USUARIOS
         //
-        setearLogin({commit},bool){
+        setearLogin({commit}, bool){
             commit('setLogin', bool)
         },
         //

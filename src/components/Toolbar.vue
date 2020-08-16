@@ -19,7 +19,7 @@
 
       <!-- SELECION DE COMUNA -->
       <v-select
-        v-model="select"
+        v-model="select_comuna"
         :items="ubicaciones"
         item-text="comuna"
         item-value="abbr"
@@ -29,6 +29,7 @@
         :prepend-icon="!this.mobile ? 'mdi-map-marker' : ''"
         single-line
         size="1px"
+        @change="setearComuna()"
       ></v-select>
       <!-- FIN: SELECION DE COMUNA -->
       
@@ -78,7 +79,7 @@
       >
       <span class="text">
       <v-icon class="icon">mdi-school</v-icon>
-      Conoce las ventajas de tener <strong>Tu Ficha 
+        Conoce las ventajas de tener <strong>Tu Ficha 
         <a @click.stop="dialog = true">aquí</a></strong>
       </span>
       </v-alert>
@@ -160,17 +161,20 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
         }
     },
     methods: {
-    ...mapActions(['cerrarSesion','setearLogin','setearLogin']),
-    backHome() {
+    ...mapActions(['cerrarSesion','setearLogin','setearLogin','setearComunaSeleccionada']),
+      backHome() {
         if(this.$route.name == "home") {
           location.reload()
         }else{
           this.$router.push('/')
         }
       },
+      setearComuna(){
+        this.setearComunaSeleccionada(this.select_comuna)
+      }
     },
     computed: {
-      ...mapState(['ubicaciones','select','login']),
+      ...mapState(['ubicaciones','select_comuna','login']),
       ...mapGetters(['existeUsuario'])
     },
   }
