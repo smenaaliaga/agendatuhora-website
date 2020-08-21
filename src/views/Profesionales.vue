@@ -10,13 +10,13 @@
           </div>
         </v-col>
         <v-col cols="12" sm="8">
-            <v-text-field
-                solo
-                rounded
-                append-icon="mdi-magnify"
-                placeholder="Escribe aquí"
-                outlined
-            ></v-text-field>
+          <v-text-field
+            solo
+            rounded
+            append-icon="mdi-magnify"
+            placeholder="Escribe aquí"
+            outlined
+          ></v-text-field>
         </v-col>
         <v-col :hidden="!mobile ? false : true" cols="3" sm="2" style="text-align: right;">
           <div data-aos="fade-down" data-aos-anchor="#trigger">
@@ -28,7 +28,7 @@
       </v-row>
     </div>
 
-    <TarjetaProfesional :mobile="mobile" />
+    <TarjetaProfesional :mobile="mobile" :search="$route.params.search" />
     
     <div class="space-footer" />
 

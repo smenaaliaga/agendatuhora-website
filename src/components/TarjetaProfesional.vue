@@ -1,11 +1,7 @@
 <template>
     <div>
         <div v-for="profesional in profesionales" v-bind:key="profesional.id">
-            <v-card
-                class="mx-auto"
-                max-width="600"
-                
-            >
+            <v-card class="mx-auto" max-width="600">
                 <v-container>
                     <v-row justify="space-between">
                         <v-col cols="4" sm="2">
@@ -50,25 +46,30 @@
 
             <div class="space-cards" />
         </div>
-        
+
     </div>
 </template>
 
 <script>
-    import { mapActions, mapState } from 'vuex'
-    export default {
+import { mapActions, mapState } from 'vuex'
+export default {
     name: 'TarjetaProfesionales',
-    props: ['mobile'],
+    props: ['mobile','search'],
     created(){
-        this.getProfesionales()
+        //this.getProfesionales()
+        if(this.search != null){
+            this.getProfesionalesPorComunaSearch(this.search)
+        }else{
+            this.getProfesionalesPorComuna()
+        }
     },
     computed: {
-        ...mapState(['profesionales']),
+        ...mapState(['profesionales'])
     },
     methods: {
-        ...mapActions(['getProfesionales']),
+        ...mapActions(['getProfesionales','getProfesionalesPorComuna','getProfesionalesPorComunaSearch']),
         goProfesional(id) {
-            this.$router.push({name: 'hora', params: {id: id} });
+            this.$router.push({name: 'hora', params: {id: id} })
         }
     }
 }

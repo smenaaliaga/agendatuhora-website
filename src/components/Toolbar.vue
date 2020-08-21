@@ -29,7 +29,7 @@
         :prepend-icon="!this.mobile ? 'mdi-map-marker' : ''"
         single-line
         size="1px"
-        @change="setearComuna()"
+        @input="setearComuna"
       ></v-select>
       <!-- FIN: SELECION DE COMUNA -->
       
@@ -154,14 +154,14 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
       }
     },
     sesion(){
-        if(this.$route.name == "sesion") {
-            location.reload()
-        }else{
-            this.$router.push({name: 'sesion'})
-        }
+      if(this.$route.name == "sesion") {
+        location.reload()
+      }else{
+        this.$router.push({name: 'sesion'})
+      }
     },
     methods: {
-    ...mapActions(['cerrarSesion','setearLogin','setearLogin','setearComunaSeleccionada']),
+      ...mapActions(['cerrarSesion','setearLogin','setearLogin','setearComunaSeleccionada','getProfesionalesPorComuna']),
       backHome() {
         if(this.$route.name == "home") {
           location.reload()
@@ -169,8 +169,16 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
           this.$router.push('/')
         }
       },
-      setearComuna(){
-        this.setearComunaSeleccionada(this.select_comuna)
+      setearComuna(val){
+        this.setearComunaSeleccionada(val)
+        .then(() => {
+          this.getProfesionalesPorComuna()
+        })
+      }
+    },
+    watch: {
+      setearComuna (newVal) {
+        console.log('item changed', newVal);
       }
     },
     computed: {

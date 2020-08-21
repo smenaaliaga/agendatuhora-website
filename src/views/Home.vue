@@ -16,15 +16,18 @@
         <v-row no-gutters>
             <v-col cols="12" sm="2" />
             <v-col cols="12" sm="8">
-
-                <v-text-field
-                    solo
-                    rounded
-                    append-icon="mdi-magnify"
-                    placeholder="Escribe aquí"
-                    outlined
-                ></v-text-field>
                 
+                <form @keypress.enter.prevent="buscar">
+                    <v-text-field
+                        v-model="search"
+                        solo
+                        rounded
+                        append-icon="mdi-magnify"
+                        placeholder="Escribe aquí"
+                        outlined
+                    ></v-text-field>
+                </form>
+
             </v-col>
             <v-col cols="12" sm="2" />
         </v-row>
@@ -48,7 +51,17 @@
 
 <script>
   export default {
-    props: ['mobile']
+    props: ['mobile'],
+    data(){
+        return{
+            search: ''
+        }
+    },
+    methods: {
+        buscar(){
+            this.$router.push({name: 'profesionales', params: {search: this.search} });
+        }
+    }
   }
 </script>
 

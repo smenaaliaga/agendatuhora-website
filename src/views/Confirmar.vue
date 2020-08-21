@@ -103,8 +103,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-
   </v-container>
 </template>
 
@@ -121,7 +119,6 @@ export default {
   methods: {
     ...mapActions(['cerrarSesion','getProfesional','setearLogin','getDatosUsuario','agregarAgenda']),
     agendar(){
-      /*
       this.agregarAgenda({
         id_profesional: this.$route.params.id,
         id_paciente: this.datosUsuario.uid,
@@ -135,12 +132,10 @@ export default {
       .then(() => {
         this.fin = true
       })
-      */
-      this.fin = true
     }
   },
   inicio(){
-    this.fin = true
+    this.fin = false
     this.$router.push({name: 'home'})
   },
   computed: {

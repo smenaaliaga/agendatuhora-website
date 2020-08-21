@@ -23,15 +23,15 @@ export const store = new Vuex.Store({
         login: false,
         // Usuarios
         usuario: null,
-        datosUsuario: {  uid: '', email: '', nombre: '', comuna: '',  direccion: ''},
+        datosUsuario: { uid: '', email: '', nombre: '', comuna: '',  direccion: '' },
         error: null,
         // Profesionales
         profesionales: [],
-        profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: '', dias_disponibles: '', hora_inicio: '', hora_fin: ''}
+        profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: '', dias_disponibles: '', hora_inicio: '', hora_fin: ''            }
     },
     mutations: {
         // Mutaciones Comuna Seleccionada
-        setComunaSeleccionada(state, payload){
+        setSelect_comuna(state, payload){
             state.select_comuna = payload
         },
         // Mutaciones Login
@@ -69,8 +69,16 @@ export const store = new Vuex.Store({
         //
         // COMUNA SELECCIONADA
         //
-        setearComunaSeleccionada({commit}, select_comuna){
-            commit('setComunaSeleccionada', select_comuna)
+        setearComunaSeleccionada({commit}, abbr){
+            var resultObject = null
+
+            for (var i=0; i < this.state.ubicaciones.length; i++) {
+                if (this.state.ubicaciones[i].abbr === abbr) {
+                    resultObject =  this.state.ubicaciones[i];
+                }
+            }
+            
+            commit('setSelect_comuna', resultObject)
         },
         //
         // USUARIOS
@@ -176,6 +184,31 @@ export const store = new Vuex.Store({
                 commit('setProfesional', profesional)
             })
         },
+        getProfesionalesPorComuna({commit}) {
+            const profesionales = []
+            db.collection('profesionales').where('comuna', '==',this.state.select_comuna.comuna).get()
+            .then(res => {
+                res.forEach(doc =>{
+                    let profesional = doc.data()
+                    profesional.id = doc.id
+                    profesionales.push(profesional)
+                })
+                commit('setProfesionales', profesionales)
+            })
+        },
+        getProfesionalesPorComunaSearch({commit}, search) {
+            const profesionales = []
+            db.collection('profesionales').where('comuna', '==',this.state.select_comuna.comuna)
+            .where('nombre', 'like', search).get()
+            .then(res => {
+                res.forEach(doc =>{
+                    let profesional = doc.data()
+                    profesional.id = doc.id
+                    profesionales.push(profesional)
+                })
+                commit('setProfesionales', profesionales)
+            })
+        },
         editProfesional({commit}, profesional){
             db.collection('profesionales').doc(profesional.id).update({
                 nombre: profesional.nombre,
@@ -203,8 +236,7 @@ export const store = new Vuex.Store({
                 hora_inicio: profesional.hora_inicio,
                 hora_fin: profesional.hora_fin
             })
-            .then(doc => {
-                console.log(doc.id)
+            .then(() => {
                 commit('aux', profesional)
             })
         },
