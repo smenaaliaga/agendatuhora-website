@@ -10,13 +10,28 @@
           </div>
         </v-col>
         <v-col cols="12" sm="8">
-          <v-text-field
-            solo
-            rounded
-            append-icon="mdi-magnify"
-            placeholder="Escribe aquí"
+          <v-combobox
+            v-model="select_prof"
+            :items="profesiones"
+            multiple
             outlined
-          ></v-text-field>
+            rounded
+            chips
+            solo
+            @change="search"
+            >
+              <template v-slot:selection="data">
+                  <v-chip
+                  :key="JSON.stringify(data.item)"
+                  v-bind="data.attrs"
+                  :input-value="data.selected"
+                  :disabled="data.disabled"
+                  @click:close="data.parent.selectItem(data.item)"
+                  >
+                  {{ data.item }}
+                  </v-chip>
+              </template>
+            </v-combobox> 
         </v-col>
         <v-col :hidden="!mobile ? false : true" cols="3" sm="2" style="text-align: right;">
           <div data-aos="fade-down" data-aos-anchor="#trigger">
@@ -28,7 +43,7 @@
       </v-row>
     </div>
 
-    <TarjetaProfesional :mobile="mobile" :search="$route.params.search" />
+    <TarjetaProfesional :mobile="mobile"/>
     
     <div class="space-footer" />
 
@@ -39,6 +54,8 @@
 import IconBase from '@/components/IconBase'
 import IconSemid from '@/components/icons/IconSemid'
 import TarjetaProfesional from '@/components/TarjetaProfesional'
+import { mapState, mapActions } from 'vuex'
+
 export default {
   components: {
     IconBase,
@@ -46,10 +63,33 @@ export default {
     TarjetaProfesional
   },
   props: ['mobile'],
+  created(){
+    this.setearLoading()
+  },
   methods: {
+    ...mapActions(['setearProfesionSeleccionada','setearLoading']),
     backHome() {
       this.$router.push('/');
+    },
+    search: function(val){
+      this.setearProfesionSeleccionada(val)
+      this.setearLoading()
     }
   },
+  computed: {
+    ...mapState(['profesiones','select_prof']),
+    /*
+    select_prof: {
+        /* REVISAR!!!!!!!
+        get: function () {
+            return this.store.state.message
+        },
+        
+        set: function(val){
+            this.setearProfesionSeleccionada(val)
+        }
+    }
+    */
+  }
 } 
 </script>

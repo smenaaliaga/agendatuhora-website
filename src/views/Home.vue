@@ -16,8 +16,32 @@
         <v-row no-gutters>
             <v-col cols="12" sm="2" />
             <v-col cols="12" sm="8">
-                
-                <form @keypress.enter.prevent="buscar">
+ 
+                <v-combobox
+                v-model="select_prof"
+                :items="profesiones"
+                multiple
+                outlined
+                rounded
+                chips
+                solo
+                >
+                    <template v-slot:selection="data">
+                        <v-chip
+                        :key="JSON.stringify(data.item)"
+                        v-bind="data.attrs"
+                        :input-value="data.selected"
+                        :disabled="data.disabled"
+                        @click:close="data.parent.selectItem(data.item)"
+                        >
+                        {{ data.item }}
+                        </v-chip>
+                    </template>
+                    <template v-slot:append-outer>
+                        <v-icon @click="search" large color="green">mdi-magnify</v-icon>
+                    </template>
+                </v-combobox> 
+<!--
                     <v-text-field
                         v-model="search"
                         solo
@@ -26,7 +50,22 @@
                         placeholder="Escribe aquí"
                         outlined
                     ></v-text-field>
-                </form>
+
+                    <v-select
+                        v-model="select_comuna"
+                        :items="ubicaciones"
+                        item-text="comuna"
+                        item-value="abbr"
+                        menu-props="auto"
+                        hint="Selecciona tu comuna"
+                        persistent-hint
+                        :prepend-icon="!this.mobile ? 'mdi-map-marker' : ''"
+                        dense
+                        solo
+                        size="1px"
+                        @input="setearComuna"
+                    ></v-select>
+-->
 
             </v-col>
             <v-col cols="12" sm="2" />
@@ -50,19 +89,30 @@
 </template>
 
 <script>
-  export default {
+import { mapState, mapActions } from 'vuex'
+
+export default {
     props: ['mobile'],
-    data(){
-        return{
-            search: ''
+    methods: {
+        ...mapActions(['setearProfesionSeleccionada']),
+        search(){
+            this.$router.push({name: 'profesionales'})
         }
     },
-    methods: {
-        buscar(){
-            this.$router.push({name: 'profesionales', params: {search: this.search} });
+    computed: {
+        ...mapState(['profesiones','select_prof']),
+        select_prof: {
+            /* REVISAR!!!!!!!
+            get: function () {
+                return this.store.state.message
+            },
+            */
+            set: function(val){
+                this.setearProfesionSeleccionada(val)
+            }
         }
     }
-  }
+}
 </script>
 
 <style>

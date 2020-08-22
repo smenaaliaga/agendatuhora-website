@@ -19,8 +19,21 @@ export const store = new Vuex.Store({
             { comuna: 'Quilpué', abbr: 'QLP' },
             { comuna: 'Villa Alemana', abbr: 'VLN' },
         ],
+        select_prof: null,
+        profesiones: [
+            { header: 'También buscar por el nombre del profesional' },
+            'Kinesiología',
+            'Medicina',
+            'Enfermería',
+            'Técnico en enfermería',
+            'Psicología',
+            'Nutrición',
+            'Fonoaudiología'
+        ],
         // Dialogs
         login: false,
+        // Loading
+        loading: true,
         // Usuarios
         usuario: null,
         datosUsuario: { uid: '', email: '', nombre: '', comuna: '',  direccion: '' },
@@ -33,6 +46,10 @@ export const store = new Vuex.Store({
         // Mutaciones Comuna Seleccionada
         setSelect_comuna(state, payload){
             state.select_comuna = payload
+        },
+        // Mutaciones Profesion Seleccionada
+        setSelect_profesion(state, payload){
+            state.select_prof = payload
         },
         // Mutaciones Login
         setLogin(state, payload){
@@ -63,7 +80,11 @@ export const store = new Vuex.Store({
         setEliminarProfesional(state, payload){
             state.profesionales = state.profesionales.filter(item => item.id !== payload)
         },
-        aux(){} // Void auxiliar
+        // Mutaciones Profesion Seleccionada
+        setLoading(state, payload){
+            state.loading = payload
+        },
+        aux(){}, // Void auxiliar
     },
     actions: {
         //
@@ -79,6 +100,42 @@ export const store = new Vuex.Store({
             }
             
             commit('setSelect_comuna', resultObject)
+        },
+        //
+        // PROFESION SELECCIONADA
+        //
+        setearProfesionSeleccionada({commit}, arreglo_de_buscados){
+            commit('setSelect_profesion', arreglo_de_buscados)
+
+            const profesionales = []
+
+            if(arreglo_de_buscados.length == 0){
+
+                db.collection('profesionales').get()
+                .then(res => {
+                    res.forEach(doc =>{
+                        let profesional = doc.data()
+                        profesional.id = doc.id
+                        profesionales.push(profesional)
+                    })
+                    commit('setProfesionales', profesionales)
+                })
+
+            }else{
+
+                arreglo_de_buscados.forEach(element => {
+                    db.collection('profesionales').where('profesion', '==',element).get()
+                        .then(res => {
+                            res.forEach(doc =>{
+                                let profesional = doc.data()
+                                profesional.id = doc.id
+                                profesionales.push(profesional)
+                            })
+                            commit('setProfesionales', profesionales)
+                        })
+                })
+
+            }
         },
         //
         // USUARIOS
@@ -184,6 +241,7 @@ export const store = new Vuex.Store({
                 commit('setProfesional', profesional)
             })
         },
+        /*
         getProfesionalesPorComuna({commit}) {
             const profesionales = []
             db.collection('profesionales').where('comuna', '==',this.state.select_comuna.comuna).get()
@@ -196,6 +254,7 @@ export const store = new Vuex.Store({
                 commit('setProfesionales', profesionales)
             })
         },
+        */
         getProfesionalesPorComunaSearch({commit}, search) {
             const profesionales = []
             db.collection('profesionales').where('comuna', '==',this.state.select_comuna.comuna)
@@ -264,6 +323,13 @@ export const store = new Vuex.Store({
                 commit('aux', agenda)
             })
         },
+        //
+        // COMUNA SELECCIONADA
+        //
+        setearLoading({commit}){           
+            commit('setLoading', true)
+            setTimeout(() => commit('setLoading', false), 1000)
+        }
     },
     getters: {
         existeUsuario(state){

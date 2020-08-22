@@ -9,15 +9,12 @@
       <v-btn class="icon mx-2" text fab @click="backHome()" color="grey">
         <icon-base width="140" height="140" icon-name="SEMID"><icon-Semid /></icon-base>
       </v-btn>
-
-      <span class="text">
-        <icon-base width="120" height="120" icon-name="SEMID"><icon-SemidLetra /></icon-base>
-      </span>
+      <icon-base width="120" height="120" icon-name="SEMID"><icon-SemidLetra /></icon-base>
+      
       <!-- FIN: TITULO TOOLBAR -->
 
-      <v-divider class="mx-2" inset vertical />
-
       <!-- SELECION DE COMUNA -->
+      <!--
       <v-select
         v-model="select_comuna"
         :items="ubicaciones"
@@ -31,6 +28,7 @@
         size="1px"
         @input="setearComuna"
       ></v-select>
+      -->
       <!-- FIN: SELECION DE COMUNA -->
       
       <v-spacer />
