@@ -19,6 +19,10 @@
             solo
             placeholder="Escribe o selecciona aquí"
             @change="search"
+            hide-no-data
+            :menu-props="{value: autoselectMenu}"
+            @click="toggle"
+            @keyup.enter="toggle"
             >
               <template v-slot:selection="data">
                   <v-chip
@@ -62,6 +66,11 @@ export default {
     IconSemid,
     TarjetaProfesional
   },
+  data(){
+    return{
+      autoselectMenu: false,
+    }
+  },
   props: ['mobile'],
   created(){
     this.setearLoading()
@@ -74,6 +83,9 @@ export default {
     search: function(val){
       this.setearProfesionSeleccionada(val)
       this.setearLoading()
+    },
+    toggle() {
+      this.autoselectMenu = !this.autoselectMenu
     }
   },
   computed: {

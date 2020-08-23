@@ -24,6 +24,7 @@
                 outlined
                 rounded
                 solo
+                @keyup.enter="search()"
                 placeholder="Escribe o selecciona aquí"
                 >
                     <template v-slot:selection="data">
@@ -97,7 +98,7 @@ export default {
         ...mapActions(['setearProfesionSeleccionada']),
         search(){
             this.$router.push({name: 'profesionales'})
-        }
+        },
     },
     computed: {
         ...mapState(['profesiones','select_prof']),
