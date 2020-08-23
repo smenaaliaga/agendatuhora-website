@@ -328,7 +328,7 @@ export const store = new Vuex.Store({
         //
         setearLoading({commit}){           
             commit('setLoading', true)
-            setTimeout(() => commit('setLoading', false), 1000)
+            setTimeout(() => commit('setLoading', false), 1800)
         }
     },
     getters: {

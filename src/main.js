@@ -17,13 +17,16 @@ auth.onAuthStateChanged(user => {
 import Sticky from 'vue-sticky-directive'
 Vue.use(Sticky)
 
-Vue.config.productionTip = false  
+Vue.config.productionTip = true  
 
 Vue.use(VueRouter)
 
 let router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior () {
+      return { x: 0, y: 0 }
+  },
   routes
 });
 

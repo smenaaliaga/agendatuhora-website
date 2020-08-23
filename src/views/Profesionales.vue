@@ -16,8 +16,8 @@
             multiple
             outlined
             rounded
-            chips
             solo
+            placeholder="Escribe o selecciona aquí"
             @change="search"
             >
               <template v-slot:selection="data">

@@ -78,7 +78,10 @@
 
                     <div align="center">
 
-                        
+                        <div v-if="!disabled">
+                            <div style="height: 10px" />
+                            <h2>¡Agendar!</h2>
+                        </div>
 
                         <div v-if="disabled">
                             <div style="height: 10px" />

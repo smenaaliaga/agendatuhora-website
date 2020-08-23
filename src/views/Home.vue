@@ -23,8 +23,8 @@
                 multiple
                 outlined
                 rounded
-                chips
                 solo
+                placeholder="Escribe o selecciona aquí"
                 >
                     <template v-slot:selection="data">
                         <v-chip

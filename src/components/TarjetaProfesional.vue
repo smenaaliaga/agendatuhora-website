@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div style="margin-top: -25px;" />
+        <h4 class="text-center">Escoge un profesional</h4>
+        <div style="height:10px" />
         <div v-for="profesional in profesionales" v-bind:key="profesional.id">
             <v-skeleton-loader
             :loading="loading"

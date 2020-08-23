@@ -45,12 +45,15 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Footer',
   methods: {
-      goProfesionales() {
-          this.$router.push('/profesionales');
-      }
+    ...mapActions(['setearProfesionSeleccionada']),
+    goProfesionales() {
+        this.setearProfesionSeleccionada('')
+        this.$router.push('/profesionales');
+    }
   },
   computed: {
     homePage() {
