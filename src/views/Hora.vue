@@ -109,9 +109,11 @@
                             {{ time }}
                         </div>
 
-                        <div style="height: 50px" />
+                        <div style="height: 20px" />
 
                         <v-btn @click="goConfirmar(profesional.id, date, time)" :disabled="disabled" dark color="success">Agendar</v-btn>
+                        <div style="height: 20px" />
+                        <v-btn @click="$router.go(-1) " text color="error"><v-icon small class="icon">mdi-arrow-left</v-icon> Voler</v-btn>
                     </div>
 
                     <div class="space-footer" />

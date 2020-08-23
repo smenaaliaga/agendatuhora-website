@@ -107,9 +107,10 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
           medium
           @click="dialog = false"
         >
-          Cancelar
+          Cerrar
         </v-btn>
 
+        <!--
         <v-btn
           color="green darken-1"
           text
@@ -118,6 +119,7 @@ Maecenas dui ante, varius in justo sed, volutpat ullamcorper augue. Mauris cursu
         >
           Registrarte
         </v-btn>
+        -->
       </v-card-actions>
     </v-card>
   </v-dialog>

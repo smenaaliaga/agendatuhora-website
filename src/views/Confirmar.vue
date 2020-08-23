@@ -5,19 +5,21 @@
       <v-col cols="12" sm="4">
         <h2 class="text-center">¡Último paso!</h2>
         <div style="height: 30px;"/>
-
-        Te atenderás con
-        <div style="height: 15px;"/>
-
-        <strong>Nombre:</strong> {{ profesional.nombre }} {{ profesional.apellido }}
-        <div style="height: 3px;"/>
-        <strong>Profesión:</strong> {{ profesional.profesion }}
-        <div style="height: 15px;"/>
-        El día y la hora
-        <div style="height: 15px;"/>
-        <strong>Fecha:</strong> {{ $route.params.fecha }}
-        <div style="height: 3px;"/>
-        <strong>Hora:</strong> {{ $route.params.hora }}
+          Te atenderás con
+          <div style="height: 15px;"/>
+          <ul>
+            <strong>Nombre:</strong> {{ profesional.nombre }} {{ profesional.apellido }}
+            <div style="height: 3px;"/>
+            <strong>Profesión:</strong> {{ profesional.profesion }}
+          </ul>
+          <div style="height: 15px;"/>
+          El día y la hora
+          <div style="height: 15px;"/>
+          <ul>
+            <strong>Fecha:</strong> {{ $route.params.fecha }}
+            <div style="height: 3px;"/>
+            <strong>Hora:</strong> {{ $route.params.hora }}
+          </ul>
       </v-col>
       <v-col cols="12" sm="4">
         <h3 v-if="!existeUsuario">Confirma tu hora solo iniciando sesión</h3>
@@ -60,6 +62,9 @@
           ></v-text-field>
           <div align="center">
             <v-btn type="submit" dark color="success">Confirmar hora</v-btn>
+            <div style="height: 20px" />
+            <v-btn @click="$router.go(-1) " text color="error"><v-icon small class="icon">mdi-arrow-left</v-icon> Voler</v-btn>
+            <div style="height: 80px" />
           </div>
         </form>
       </v-col>
@@ -67,16 +72,6 @@
 
 
     <v-dialog v-model="fin" persistent max-width="600">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          Open Dialog
-        </v-btn>
-      </template>
       <v-card>
         <v-card-title class="headline">
         </v-card-title>
@@ -98,7 +93,6 @@
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="fin = false">btn</v-btn>
           <v-btn color="blue darken-1" text @click="inicio()">Volver al inicio</v-btn>
         </v-card-actions>
       </v-card>
