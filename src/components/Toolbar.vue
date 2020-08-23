@@ -91,13 +91,14 @@
   >
     <v-card>
       <v-card-title class="headline"><v-icon color="green" class="icon-right">mdi-file-document</v-icon> Ventajas de tener Tu Ficha</v-card-title>
-    
+      <div style="height: 20px" />
       <v-card-text>
         Con tu usuario podrás acceder a tu ficha personal y a las evoluciones de tu tratamiento, además de poder ver que profesionales te han atendido con anterioridad para poder re agendar con el mismo profesional nuevamente y así no perder la continuidad del tratamiento y/o terapia.
-        <div />
+        <div style="height: 20px" />
         Recuerda que la clave y usuario son únicos, estos podrán ser utilizados solo por el paciente o el representante legal en caso de que lo necesite.
+        <div style="height: 30px" />
+        <h2 class="text-center">¡Registrate!</h2>
       </v-card-text>
-
       <v-card-actions>
         <v-spacer></v-spacer>
 

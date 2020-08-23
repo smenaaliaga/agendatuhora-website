@@ -38,9 +38,11 @@
                         {{ data.item }}
                         </v-chip>
                     </template>
+                    <!--
                     <template v-slot:append-outer>
                         <v-icon @click="search" large color="green">mdi-magnify</v-icon>
                     </template>
+                    -->
                 </v-combobox> 
 <!--
                     <v-text-field
@@ -75,14 +77,11 @@
 
             <v-col class="text-center" cols="12">
 
-                <v-btn rounded 
-                    href="#"
-                    color="#BF0811"
-                    dark
-                    medium 
-                > 
-                    <span class="mr-2">¿Necesitas Ayuda?</span>
+
+                <v-btn rounded color="green" dark medium @click="search"> 
+                    <v-icon>mdi-magnify</v-icon><span class="mr-2">Buscar</span>
                 </v-btn>
+
             </v-col>
         </v-row>
         <div class="space-footer" />

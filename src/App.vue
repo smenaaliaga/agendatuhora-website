@@ -3,7 +3,7 @@
   <v-app>
     <Toolbar :mobile="this.mobile" />
     <router-view :mobile="this.mobile" />
-    <Footer />
+    <Footer :mobile="this.mobile" />
   </v-app>
 </div>
 </template>

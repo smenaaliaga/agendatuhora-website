@@ -126,11 +126,11 @@ export default {
       .then(() => {
         this.fin = true
       })
-    }
-  },
-  inicio(){
-    this.fin = false
-    this.$router.push({name: 'home'})
+    },
+    inicio(){
+      this.fin = false
+      this.$router.push({name: 'home'})
+    },
   },
   computed: {
     ...mapState(['profesional','usuario','datosUsuario','ubicaciones']),
