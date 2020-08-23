@@ -3,7 +3,7 @@
     <div style="height: 20px;" />
     <v-row>
       <v-col cols="12" sm="4">
-        <h2 class="text-center">¡Estas a un paso!</h2>
+        <h2 class="text-center">¡Último paso!</h2>
         <div style="height: 30px;"/>
 
         Te atenderás con

@@ -125,14 +125,14 @@ export const store = new Vuex.Store({
 
                 arreglo_de_buscados.forEach(element => {
                     db.collection('profesionales').where('profesion', '==',element).get()
-                        .then(res => {
-                            res.forEach(doc =>{
-                                let profesional = doc.data()
-                                profesional.id = doc.id
-                                profesionales.push(profesional)
-                            })
-                            commit('setProfesionales', profesionales)
+                    .then(res => {
+                        res.forEach(doc =>{
+                            let profesional = doc.data()
+                            profesional.id = doc.id
+                            profesionales.push(profesional)
                         })
+                        commit('setProfesionales', profesionales)
+                    })
                 })
 
             }

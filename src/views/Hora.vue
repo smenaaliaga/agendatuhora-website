@@ -65,6 +65,7 @@
                                     :min="horaMinima()"
                                     :max="horaMaxima()"
                                     :allowed-minutes="allowedStep"
+                                    @change="disabledFun()"
                                 ></v-time-picker>
                             </v-tab-item>
 
@@ -77,7 +78,14 @@
 
                     <div align="center">
 
-                        <div style="height: 10px" />
+                        
+
+                        <div v-if="disabled">
+                            <div style="height: 10px" />
+                            <h4>Selecciona hora y fecha</h4>
+                        </div>
+
+                        <div style="height: 30px" />
 
                         <div class="subtitle font-weight-regular">
                             Fecha
@@ -103,7 +111,7 @@
 
                         <div style="height: 50px" />
 
-                        <v-btn @click="goConfirmar(profesional.id, date, time)" dark color="success">Agendar</v-btn>
+                        <v-btn @click="goConfirmar(profesional.id, date, time)" :disabled="disabled" dark color="success">Agendar</v-btn>
                     </div>
 
                     <div class="space-footer" />
@@ -123,6 +131,8 @@ export default {
     data(){
         return {
             id: this.$route.params.id,
+
+            disabled: true,
 
             tab: 'tab-1',
             
@@ -144,24 +154,31 @@ export default {
         currentDate.setDate(currentDate.getDate()+1);
         
         this.minDate = currentDate.toISOString().substr(0, 10);
-        this.date = currentDate.toISOString().substr(0, 10);
 
         currentDate.setDate(currentDate.getDate() + 60);
         this.maxDate = currentDate.toISOString().substr(0, 10);
     },
     methods: {
         ...mapActions(['getProfesional']),
+
+        disabledFun(){
+            if(this.time != '' && this.date != '')
+                this.disabled = false
+            else
+                this.disabled = true
+        },
         
         allowedWeeks: function(val){
             return this.profesional.dias_disponibles[(new Date(val)).getDay()]
         },
 
         changeTab(){
-            setTimeout(() => { this.tab='tab-2'; }, 500);
+            setTimeout(() => { this.tab='tab-2'; }, 500)
+            this.disabledFun()
         },
 
         horaMinima() {
-            this.time = this.profesional.hora_inicio[(new Date(this.date)).getDay()]
+            //this.time = this.profesional.hora_inicio[(new Date(this.date)).getDay()]
             return this.profesional.hora_inicio[(new Date(this.date)).getDay()]
         },
         horaMaxima() {
