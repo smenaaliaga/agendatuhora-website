@@ -156,12 +156,11 @@ export default {
 
         // FECHAS
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate()+1);
-        
-        this.minDate = currentDate.toISOString().substr(0, 10);
+        currentDate.setDate(currentDate.getDate() + 2);
+        this.minDate = currentDate.toISOString().substr(0, 10)
 
-        currentDate.setDate(currentDate.getDate() + 60);
-        this.maxDate = currentDate.toISOString().substr(0, 10);
+        currentDate.setDate(currentDate.getDate() + 60)
+        this.maxDate = currentDate.toISOString().substr(0, 10)
     },
     methods: {
         ...mapActions(['getProfesional']),
