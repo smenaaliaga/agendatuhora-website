@@ -7,7 +7,7 @@ import { routes } from './routes'
 import { auth } from './firebase'
 
 auth.onAuthStateChanged(user => {
-  if(user){+
+  if(user){
     store.dispatch('detectarUsuario', {email: user.email, uid: user.uid})
   }else{
     store.dispatch('detectarUsuario', user)

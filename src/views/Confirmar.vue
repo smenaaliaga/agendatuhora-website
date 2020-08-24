@@ -48,9 +48,13 @@
           <v-select
             v-model="modalidad_select"
             :items="modalidad"
-            required
+            :disabled="['Técnico en enfermería','Kinesiología','Enfermería','Psicología'].indexOf(profesional.profesion) > -1 ? true : false"
             label="Selecciona tu modalidad"
-          ></v-select>
+            :rules="[(v) => !!v || 'Modalidad requerida']"
+            required
+            @change="selectOnline()"
+          >
+          </v-select>
           <v-text-field
               v-model="datosUsuario.nombre"
               label="Nombre"
@@ -62,12 +66,14 @@
               required
           ></v-text-field>
           <v-text-field
+              :disabled="modalidad_select != 'Online (Videollamada)' ? false : true"
+              v-show="modalidad_select != 'Online (Videollamada)' ? true : false"
               v-model="datosUsuario.direccion"
               label="Direccion"
               required
           ></v-text-field>
           <div align="center">
-            <v-btn type="submit" dark color="success">Confirmar hora</v-btn>
+            <v-btn type="submit" color="success" :disabled="!online ? true : false">Confirmar hora</v-btn>
             <div style="height: 20px" />
             <v-btn @click="$router.go(-1) " text color="error"><v-icon small class="icon">mdi-arrow-left</v-icon> Voler</v-btn>
             <div style="height: 80px" />
@@ -83,20 +89,31 @@
         </v-card-title>
         <div class="text-center">
           <v-icon x-large class="icon" style="color: green;">mdi-check-all</v-icon>
-          <div style="height:10px;" />
-          <h3>¡Felicidades, se ha procesado tu hora médica a domicilio!</h3>
-          <div style="height:20px;" />
-          Has agendado con {{ profesional.nombre }} {{ profesional.apellido }} 
-          <div style="height:5px;" />
-          De profesión {{ profesional.profesion }}
-          <div style="height:15px;" />
-          Te visitará la fecha de {{ $route.params.fecha }} y hora {{ $route.params.hora }} 
-          <div style="height:15px;" />
-          La visita se realizará en la dirección {{ this.datosUsuario.direccion }}
-          <div style="height:20px;" />
-          <strong>¡Pronto te contactaremos!</strong>
-          <div style="height:20px;" />
         </div>
+          <div style="height:10px;" />
+          <h3 class="text-center">¡Felicidades, se ha procesado tu hora médica a domicilio!</h3>
+          <div style="height:30px;" />
+          <ul>
+            Has agendado con: <strong>{{ profesional.nombre }} {{ profesional.apellido }} </strong>
+            <div style="height:15px;" />
+            De profesión: <strong>{{ profesional.profesion }}</strong>
+            <div style="height:15px;" />
+            Fecha de visita: <strong>{{ $route.params.fecha }} </strong>
+            <div style="height:15px;" />
+            Hora de visita: <strong>{{ $route.params.hora }} </strong>
+            <div style="height:15px;" />
+            Modalidad de visita: <strong>{{ modalidad_select }}</strong>
+            <div v-if="modalidad_select == 'Visita a domicilio'"> 
+              <div style="height:15px;" />
+              Dirección de visita: <strong>{{ this.datosUsuario.direccion }}</strong>
+            </div>
+          </ul>
+          <div style="height:30px;" />
+          <div class="text-center">
+            <strong>¡Pronto te contactaremos!</strong>
+          </div>
+          <div style="height:20px;" />
+        
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="inicio()">Volver al inicio</v-btn>
@@ -115,7 +132,8 @@ export default {
     return{
       fin: false,
       modalidad: ['Online (Videollamada)', 'Visita a domicilio'],
-      modalidad_select: null
+      modalidad_select: null,
+      online: false
     }
   },  
   methods: {
@@ -140,13 +158,30 @@ export default {
       this.fin = false
       this.$router.push({name: 'home'})
     },
+    selectOnline(){
+      if(this.modalidad_select == 'Online (Videollamada)'){
+        this.datosUsuario.direccion = null
+        this.online = true
+      }else{
+        this.online = true
+      }
+    }
   },
   computed: {
     ...mapState(['profesional','usuario','datosUsuario','ubicaciones']),
-    ...mapGetters(['existeUsuario']),
+    ...mapGetters(['existeUsuario'])
   },
   created(){
     this.getProfesional(this.$route.params.id)
+    if(this.profesional.profesion ==  'Psicología'){
+      this.modalidad_select = 'Online (Videollamada)'
+    }
+    if(['Técnico en enfermería','Kinesiología','Enfermería'].indexOf(this.profesional.profesion) > -1){
+      this.modalidad_select = 'Visita a domicilio'
+    }
+    if(['Técnico en enfermería','Kinesiología','Enfermería','Psicología'].indexOf(this.profesional.profesion) > -1){
+      this.online = true
+    }
   },
 }
 </script>
