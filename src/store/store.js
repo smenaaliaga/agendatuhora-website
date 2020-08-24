@@ -310,14 +310,19 @@ export const store = new Vuex.Store({
         //
         // Agregar Agenda Medica
         agregarAgenda({commit}, agenda){
+            var today = new Date()
+            console.log(agenda.modalidad)
+            console.log(today)
             db.collection('agendas').add({
                 id_profesional: agenda.id_profesional,
                 id_paciente: agenda.id_paciente,
+                modalidad: agenda.modalidad,
                 nombre_paciente: agenda.nombre_paciente,
                 email_paciente: agenda.email_paciente,
                 direccion_paciente: agenda.direccion_paciente,
                 fecha: agenda.fecha,
-                hora: agenda.hora
+                hora: agenda.hora,
+                fecha_creacion: today
             })
             .then(() => {
                 commit('aux', agenda)

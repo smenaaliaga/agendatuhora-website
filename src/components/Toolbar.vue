@@ -75,20 +75,31 @@
         height="40px"
         :elevation="7"
       >
-      <span class="text">
-      <v-icon class="icon">mdi-school</v-icon>
-        Conoce las ventajas de tener <strong>Tu Ficha 
-        <a @click.stop="dialog = true">aquí</a></strong>
-      </span>
+        <v-row no-gutters>
+          <v-col v-show="!this.mobile ? true : false" cols="6">
+            <v-icon class="icon">mdi-school</v-icon>
+            Conoce las ventajas de tener Tu Ficha 
+            <a @click.stop="dialog = true"> aquí</a>
+          </v-col>
+          <v-col v-show="!this.mobile ? true : false"  cols="6" class="text-right">
+            <v-btn text small @click="contacto=!contacto">
+              <v-icon>mdi-card-account-phone</v-icon>
+              <div style="padding-left: 10px" />
+              Contactanos aquí
+            </v-btn>
+          </v-col>
+          <v-col v-show="!this.mobile ? false : true" cols="12" class="text-center">
+            <v-btn text small @click="contacto=!contacto">
+              Contactanos aquí
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-alert>
   </div>
   <!--  FIN: ALERTA -->
 
   <!--  DIALOGO -->
-  <v-dialog
-    v-model="dialog"
-    max-width="600"
-  >
+  <v-dialog v-model="dialog" max-width="600">
     <v-card>
       <v-card-title class="headline"><v-icon color="green" class="icon-right">mdi-file-document</v-icon> Ventajas de tener Tu Ficha</v-card-title>
       <div style="height: 20px" />
@@ -125,6 +136,78 @@
     </v-card>
   </v-dialog>
   <!--  FIN: DIALOGO -->
+
+
+    <!--  DIALOGO -->
+  <v-dialog v-model="contacto" max-width="600">
+    <v-card>
+      <v-card-text>
+        <div class="text-center">
+          <icon-base width="570" height="220" icon-name="SEMID" v-show="!this.mobile ? true : false"><icon-SemidSlogan /></icon-base>
+          <icon-base width="280" height="120" icon-name="SEMID" v-show="!this.mobile ? false : true"><icon-Semid /></icon-base>
+        </div>
+
+        <v-row>
+          <v-col cols="12" sm="6">
+            <h3>TELEFONO
+              <div style="height: 10px" />
+              <ul style="list-style-type:none;">
+                <li>
+                  <v-icon class="icon" style="color: green">mdi-whatsapp</v-icon>
+                  <a href="tel:+56 9 3927 3175" style="color: green; padding-left: 10px;">+56 9 3927 3175</a>
+                </li>
+                <div style="height: 10px" />
+                <li>
+                  <v-icon class="icon" style="color: green">mdi-whatsapp</v-icon> 
+                  <a href="tel:+56 9 3927 3176" style="color: green; padding-left: 10px;">+56 9 3927 3176</a>
+                </li>
+              </ul>
+            </h3>
+
+          </v-col>
+
+          <v-col cols="12" sm="6">
+            
+            <h3>
+              CORREO
+              <div style="height: 10px" />
+          
+              <ul>
+              <v-icon class="icon">mdi-email</v-icon>
+              <a href = "mailto: semidsalud@gmail.com" style="padding-left: 10px;">semidsalud@gmail.com </a> 
+              </ul>
+            </h3>
+          
+          </v-col>
+
+          <v-col cols="12">
+
+            <h3>REDES SOCIALES</h3>
+            <div style="height: 10px" />
+            <ul>
+              <div class="text-center">
+                <a href="https://www.instagram.com/semid.salud/" target="_blank" style="text-decoration: none; background-color: none;">
+                  <v-icon class="icon" size="100" style="color: red;">mdi-instagram</v-icon>
+                </a>
+                <a href="https://www.facebook.com/semidsalud" target="_blank" style="text-decoration: none; background-color: none;">
+                  <v-icon class="icon" size="100" style="color: #3b5998; padding-left: 25px;">mdi-facebook</v-icon>
+                </a>
+              </div>
+            </ul>
+
+          </v-col>
+        
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer> 
+        <v-btn color="gray" text medium @click="contacto = false">
+          Cerrar
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+  <!--  FIN: DIALOGO -->
   
   <Sesion />
 
@@ -134,24 +217,27 @@
 <script>
   import { mapState, mapActions, mapGetters } from 'vuex'
 
-  import IconBase from './IconBase.vue'
-  import IconSemidLetra from './icons/IconSemidLetra.vue'
+  import IconBase from './IconBase'
+  import IconSemidLetra from './icons/IconSemidLetra'
+  import IconSemidSlogan from './icons/IconSemidSlogan'
   import IconSemid from './icons/IconSemid'
   import Sesion from './Sesion'
 
   export default {
     name: 'Toolbar',
-    components: {
-      IconBase,
-      IconSemid,
-      IconSemidLetra,
-      Sesion
-    },
+      components: {
+        IconBase,
+        IconSemid,
+        IconSemidLetra,
+        IconSemidSlogan,
+        Sesion
+      },
     props: ['mobile'],
     data () {
       return {
         // Dialogs
-        dialog: false
+        dialog: false,
+        contacto: false
       }
     },
     sesion(){

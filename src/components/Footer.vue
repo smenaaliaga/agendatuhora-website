@@ -6,7 +6,7 @@
           <v-col class="text-center" cols="12">
             <v-btn @click="goProfesionales()"><strong>Nuestros profesionales</strong></v-btn>
           </v-col>
-          <v-col v-show="mobile" class="text-center" cols="12"> ~ </v-col>
+          <v-col v-show="mobile" class="text-center" cols="12" style="color:white"> ~ </v-col>
           <v-col class="text-left" cols="6">
             <v-btn text small @click="dialog=!dialog">Sobre nosotros</v-btn>
           </v-col>
@@ -20,10 +20,10 @@
     <div v-show="profesionales || hora || confirmar">
       <v-footer fixed class="transparent">
         <v-row no-gutters>
-          <v-col :hidden="!mobile ? true : false" class="text-left" cols="6">
+          <v-col :hidden="!mobile ? false : true" class="text-left" cols="6">
             <v-btn text small @click="dialog=!dialog">Sobre nosotros</v-btn>
           </v-col>  
-          <v-col :hidden="!mobile ? true : false" class="text-right" cols="6">
+          <v-col :hidden="!mobile ? false : true" class="text-right" cols="6">
             <v-btn text small href="https://github.com/smenaaliaga" target="_blank">Diseño smenaaliaga</v-btn>
           </v-col>
           <v-col class="text-center" cols="12">
@@ -50,9 +50,9 @@
     <v-card>
       <v-card-text>
         <div class="text-center">
-          <icon-base width="300" height="140" icon-name="SEMID"><icon-Semid /></icon-base>
+          <icon-base width="280" height="120" icon-name="SEMID"><icon-Semid /></icon-base>
         </div>
-        <h2>propósito</h2>
+        <h2>Propósito</h2>
         <div style="height: 10px" />
         Nuestro propósito es abarcar las distintas problemáticas de salud que surgen a lo largo de todo el ciclo vital, con un enfoque transdiscplinario que busca dar solución de manera conjunta a estas problemáticas, para así mejorar la calidad de vida de nuestros usuarios.
 

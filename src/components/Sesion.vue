@@ -10,7 +10,7 @@
           </v-tab>
 
            <v-tab>
-            <v-icon class="icon">mdi-account-plus</v-icon><span class="text"> Registrarses</span>
+            <v-icon class="icon">mdi-account-plus</v-icon><span class="text"> Registrarse</span>
           </v-tab>
 
           <v-tab-item>

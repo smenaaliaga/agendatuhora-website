@@ -78,8 +78,8 @@
             <v-col class="text-center" cols="12">
 
 
-                <v-btn rounded color="green" dark medium @click="search"> 
-                    <v-icon>mdi-magnify</v-icon><span class="mr-2">Buscar</span>
+                <v-btn rounded color="green" dark large @click="search"> 
+                    <v-icon>mdi-magnify</v-icon><div style="padding-left: 15px" /><span class="mr-2">Buscar</span>
                 </v-btn>
 
             </v-col>

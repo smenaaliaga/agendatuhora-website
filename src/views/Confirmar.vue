@@ -45,6 +45,12 @@
       <v-col cols="12" sm="4">
         <h3>Confirma tu hora ingresando tus datos</h3>
         <form @submit.prevent="agendar()">
+          <v-select
+            v-model="modalidad_select"
+            :items="modalidad"
+            required
+            label="Selecciona tu modalidad"
+          ></v-select>
           <v-text-field
               v-model="datosUsuario.nombre"
               label="Nombre"
@@ -107,7 +113,9 @@ export default {
   name: 'Confirmar',
   data(){
     return{
-      fin: false
+      fin: false,
+      modalidad: ['Online (Videollamada)', 'Visita a domicilio'],
+      modalidad_select: null
     }
   },  
   methods: {
@@ -116,6 +124,7 @@ export default {
       this.agregarAgenda({
         id_profesional: this.$route.params.id,
         id_paciente: this.datosUsuario.uid,
+        modalidad: this.modalidad_select,
         nombre_paciente: this.datosUsuario.nombre,
         email_paciente: this.datosUsuario.email,
         direccion_paciente: this.datosUsuario.direccion,
