@@ -45,6 +45,7 @@
                             <v-tab-item value='tab-1'>
                                 <v-date-picker
                                     v-model="date"
+                                    :show-current='false'
                                     full-width
                                     color="#007C92" 
                                     locale="es"
@@ -145,6 +146,9 @@ export default {
             time: '',
             minDate: '',
             maxDate: '',
+
+            minDateFormat: null,
+            maxDateFormat: null,
             
             // FECHA
             date: ''
@@ -156,11 +160,30 @@ export default {
 
         // FECHAS
         const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + 2);
+        currentDate.setDate(currentDate.getDate() + 2)
+        this.minDateFormat = new Date(currentDate)
         this.minDate = currentDate.toISOString().substr(0, 10)
 
         currentDate.setDate(currentDate.getDate() + 60)
+        this.maxDateFormat = new Date(currentDate)
         this.maxDate = currentDate.toISOString().substr(0, 10)
+
+        const firstdate = true
+        while(this.minDateFormat <= this.maxDateFormat){
+            if(firstdate && this.profesional.dias_disponibles[this.minDateFormat.getDay()]){
+                this.date = this.minDateFormat.toISOString().substr(0, 10)
+                this.firstdate = false
+            }
+            var newDate = this.minDateFormat.setDate(this.minDateFormat.getDate() + 1)
+            this.minDateFormat = new Date(newDate)
+        }
+/*
+        const thisdate = new Date(val)
+            const firstdate = true
+            if(firstdate && this.minDateFormat > thisdate && this.profesional.dias_disponibles[(new Date(val)).getDay()]){
+                console.log(thisdate)
+            }
+*/
     },
     methods: {
         ...mapActions(['getProfesional']),

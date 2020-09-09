@@ -3,11 +3,6 @@ import Profesionales from './views/Profesionales';
 import Hora from './views/Hora';
 import Confirmar from './views/Confirmar';
 
-// Administracion
-import EditarProfesional from './views/admin/EditarProfesional';
-import ProfesionalesAdmin from './views/admin/ProfesionalesAdmin';
-import AgregarProfesional from './views/admin/AgregarProfesional';
-
 // Usuario
 import Sesion from './views/user/Sesion';
 
@@ -31,22 +26,6 @@ export const routes = [
         path: '/profesionales/confirmar/:id', 
         name: 'confirmar',
         component: Confirmar
-    },
-    // Administracion
-    {
-        path: '/admin/profesionales/editar/:id', 
-        name: 'editarProfesional',
-        component: EditarProfesional
-    },
-    {
-        path: '/admin/profesionales/agregar', 
-        name: 'agregarProfesional',
-        component: AgregarProfesional
-    },
-    {
-        path: '/admin/profesionales', 
-        name: 'profesionalesadmin',
-        component: ProfesionalesAdmin
     },
     // Usuario
     {

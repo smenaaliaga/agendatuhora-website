@@ -66,6 +66,11 @@
               required
           ></v-text-field>
           <v-text-field
+              v-model="datosUsuario.telefono"
+              label="Telefono"
+              required
+          ></v-text-field>
+          <v-text-field
               :disabled="modalidad_select != 'Online (Videollamada)' ? false : true"
               v-show="modalidad_select != 'Online (Videollamada)' ? true : false"
               v-model="datosUsuario.direccion"
@@ -83,28 +88,29 @@
     </v-row>
 
 
-    <v-dialog v-model="fin" persistent max-width="600">
+    <v-dialog v-model="fin" persistent overlay-opacity=".95" max-width="600">
       <v-card>
         <v-card-title class="headline">
         </v-card-title>
         <div class="text-center">
-          <v-icon x-large class="icon" style="color: green;">mdi-check-all</v-icon>
+          <icon-base width="250" height="80" icon-name="SEMID"><icon-Semid /></icon-base>
         </div>
           <div style="height:10px;" />
-          <h3 class="text-center">¡Felicidades, se ha procesado tu hora médica a domicilio!</h3>
-          <div style="height:30px;" />
+          <h3 class="text-center">¡Felicidades!</h3>
+          <h3 class="text-center">Hora procesada</h3>
+          <div style="height:20px;" />
           <ul>
             Has agendado con: <strong>{{ profesional.nombre }} {{ profesional.apellido }} </strong>
-            <div style="height:15px;" />
+            <div style="height:12px;" />
             De profesión: <strong>{{ profesional.profesion }}</strong>
-            <div style="height:15px;" />
+            <div style="height:12px;" />
             Fecha de visita: <strong>{{ $route.params.fecha }} </strong>
-            <div style="height:15px;" />
+            <div style="height:12px;" />
             Hora de visita: <strong>{{ $route.params.hora }} </strong>
-            <div style="height:15px;" />
+            <div style="height:12px;" />
             Modalidad de visita: <strong>{{ modalidad_select }}</strong>
             <div v-if="modalidad_select == 'Visita a domicilio'"> 
-              <div style="height:15px;" />
+              <div style="height:12px;" />
               Dirección de visita: <strong>{{ this.datosUsuario.direccion }}</strong>
             </div>
           </ul>
@@ -126,8 +132,15 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 
+import IconBase from '../components/IconBase'
+import IconSemid from '../components/icons/IconSemid'
+
 export default {
   name: 'Confirmar',
+  components: {
+    IconBase,
+    IconSemid
+  },
   data(){
     return{
       fin: false,
@@ -145,6 +158,7 @@ export default {
         modalidad: this.modalidad_select,
         nombre_paciente: this.datosUsuario.nombre,
         email_paciente: this.datosUsuario.email,
+        telefono_paciente: this.datosUsuario.telefono,
         direccion_paciente: this.datosUsuario.direccion,
         comuna_paciente: this.ubicaciones.comuna,
         fecha: this.$route.params.fecha,

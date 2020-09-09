@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import { db, auth } from '../firebase'
 import createPersistedState from 'vuex-persistedstate'
 
-
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -15,7 +14,7 @@ export const store = new Vuex.Store({
         ubicaciones: [
             { comuna: 'Viña del Mar', abbr: 'VDM' },
             { comuna: 'Reñaca', abbr: 'RÑC' },
-            { comuna: 'Con Con', abbr: 'CNCN' },
+            { comuna: 'Con Con', abbr: 'CNCN' },        
             { comuna: 'Quilpué', abbr: 'QLP' },
             { comuna: 'Villa Alemana', abbr: 'VLN' },
         ],
@@ -36,7 +35,7 @@ export const store = new Vuex.Store({
         loading: true,
         // Usuarios
         usuario: null,
-        datosUsuario: { uid: '', email: '', nombre: '', comuna: '',  direccion: '' },
+        datosUsuario: { uid: '', email: '', telefono: '', nombre: '', comuna: '',  direccion: '' },
         error: null,
         // Profesionales
         profesionales: [],
@@ -154,6 +153,14 @@ export const store = new Vuex.Store({
                         uid: res.user.uid,
                         email: res.user.email
                     }
+                    const datosUsuario = {
+                        uid: res.user.uid,
+                        email: res.user.email,
+                        telefono: dataUser.telefono,
+                        nombre: dataUser.nombre,
+                        comuna: dataUser.comuna,
+                        direccion: dataUser.direccion
+                    }
                     db.collection('usuarios').add({
                         uid: res.user.uid,
                         email: res.user.email,
@@ -162,6 +169,7 @@ export const store = new Vuex.Store({
                         comuna: dataUser.comuna
                     })
                     commit('setUsuario', usuario)
+                    commit('setDatosUsuario', datosUsuario)
                   }).catch(error => {
                     commit('setError',error)
                 })
@@ -169,7 +177,6 @@ export const store = new Vuex.Store({
         // Obtener usuario con Login
         getDatosUsuario({commit, state}){
             let uid = state.usuario.uid
-            console.log(uid)
             const datos = null
             db.collection('usuarios').where("uid", "==", uid).get()
             .then(res => {
@@ -193,6 +200,7 @@ export const store = new Vuex.Store({
                         const usuario = {
                             uid: res.user.uid,
                             email: res.user.email,
+                            telefono: user.telefono,
                             nombre: user.nombre,
                             comuna: user.comuna,
                             direccion: user.direccion
@@ -212,7 +220,7 @@ export const store = new Vuex.Store({
         cerrarSesion({commit}){
             auth.signOut()
             sessionStorage.clear()
-            commit('setDatosUsuario', { uid: '', email: '', nombre: '', comuna: '',  direccion: '' })
+            commit('setDatosUsuario', { uid: '', email: '', telefono: '', nombre: '', comuna: '',  direccion: '' })
         },
         detectarUsuario({commit}, usuario){
             commit('setUsuario', usuario)
@@ -241,20 +249,6 @@ export const store = new Vuex.Store({
                 commit('setProfesional', profesional)
             })
         },
-        /*
-        getProfesionalesPorComuna({commit}) {
-            const profesionales = []
-            db.collection('profesionales').where('comuna', '==',this.state.select_comuna.comuna).get()
-            .then(res => {
-                res.forEach(doc =>{
-                    let profesional = doc.data()
-                    profesional.id = doc.id
-                    profesionales.push(profesional)
-                })
-                commit('setProfesionales', profesionales)
-            })
-        },
-        */
         getProfesionalesPorComunaSearch({commit}, search) {
             const profesionales = []
             db.collection('profesionales').where('comuna', '==',this.state.select_comuna.comuna)
@@ -311,18 +305,18 @@ export const store = new Vuex.Store({
         // Agregar Agenda Medica
         agregarAgenda({commit}, agenda){
             var today = new Date()
-            console.log(agenda.modalidad)
-            console.log(today)
             db.collection('agendas').add({
                 id_profesional: agenda.id_profesional,
                 id_paciente: agenda.id_paciente,
                 modalidad: agenda.modalidad,
                 nombre_paciente: agenda.nombre_paciente,
                 email_paciente: agenda.email_paciente,
+                telefono_paciente: agenda.telefono_paciente,
                 direccion_paciente: agenda.direccion_paciente,
                 fecha: agenda.fecha,
                 hora: agenda.hora,
-                fecha_creacion: today
+                fecha_creacion: today,
+                confirmado: false
             })
             .then(() => {
                 commit('aux', agenda)

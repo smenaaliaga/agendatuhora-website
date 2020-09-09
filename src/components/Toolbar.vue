@@ -143,8 +143,7 @@
     <v-card>
       <v-card-text>
         <div class="text-center">
-          <icon-base width="570" height="220" icon-name="SEMID" v-show="!this.mobile ? true : false"><icon-SemidSlogan /></icon-base>
-          <icon-base width="280" height="120" icon-name="SEMID" v-show="!this.mobile ? false : true"><icon-Semid /></icon-base>
+          <icon-base :width="mobile ? 270 : 500" :height="mobile ? 120 : 200" icon-name="SEMID"><icon-SemidAlrededor /></icon-base>
         </div>
 
         <v-row>
@@ -219,19 +218,19 @@
 
   import IconBase from './IconBase'
   import IconSemidLetra from './icons/IconSemidLetra'
-  import IconSemidSlogan from './icons/IconSemidSlogan'
+  import IconSemidAlrededor from './icons/IconSemidAlrededor'
   import IconSemid from './icons/IconSemid'
   import Sesion from './Sesion'
 
   export default {
     name: 'Toolbar',
-      components: {
-        IconBase,
-        IconSemid,
-        IconSemidLetra,
-        IconSemidSlogan,
-        Sesion
-      },
+    components: {
+      IconBase,
+      IconSemid,
+      IconSemidLetra,
+      IconSemidAlrededor,
+      Sesion
+    },
     props: ['mobile'],
     data () {
       return {
@@ -248,7 +247,7 @@
       }
     },
     methods: {
-      ...mapActions(['cerrarSesion','setearLogin','setearLogin','setearComunaSeleccionada','getProfesionalesPorComuna']),
+      ...mapActions(['cerrarSesion','setearLogin','setearComunaSeleccionada','getProfesionalesPorComuna']),
       backHome() {
         if(this.$route.name == "home") {
           location.reload()

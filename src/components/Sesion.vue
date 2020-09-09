@@ -78,6 +78,12 @@
               ></v-text-field>
 
               <v-text-field
+                v-model="telefono"
+                label="Telefono"
+                required
+              ></v-text-field>
+
+              <v-text-field
                 v-model="nombre"
                 label="Nombre (Pedro Barrientos)"
                 required
@@ -176,6 +182,7 @@ export default {
       // Registro
       nombre: '',
       direccion: '',
+      telefono: '',
       password_registro_1:'',
       password_registro_2: '',
       rulesPass: {
@@ -222,17 +229,17 @@ export default {
     ...mapActions(['crearUsuario', 'ingresoUsuario', 'cerrarSesion','setearLogin']),
     // Metodo creación
     crear(){
-    this.crearUsuario({email: this.email, password: this.password_registro_1,
+    this.crearUsuario({email: this.email, password: this.password_registro_1, telefono: this.telefono,
                         nombre: this.nombre, direccion: this.direccion, comuna: this.select})
       .then(() => {
-        /*
-        if(this.$route.name == "home") {
-          location.reload()
-        }
-        else{
-          this.$router.push({name: 'home'})
-        }
-        */
+        this.setearLogin(false)
+        this.password = ''
+        this.email = ''
+        this.nombre = ''
+        this.direccion = ''
+        this.telefono = ''
+        this.password_registro_1 =''
+        this.password_registro_2 = ''
       })
     },
     // Metodo ingreso
