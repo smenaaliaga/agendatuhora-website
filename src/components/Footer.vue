@@ -104,9 +104,9 @@ export default {
     IconSemid,
   },
   methods: {
-    ...mapActions(['setearProfesionSeleccionada']),
+    ...mapActions(['setProfesionales_select']),
     goProfesionales() {
-        this.setearProfesionSeleccionada('')
+        this.setProfesionales_select(['Mostrar todos los profesionales'])
         this.$router.push('/profesionales');
     }
   },

@@ -18,7 +18,7 @@
             <v-col cols="12" sm="8">
  
                 <v-combobox
-                v-model="select_prof"
+                v-model="profesiones_Select"
                 :items="profesiones"
                 multiple
                 outlined
@@ -38,47 +38,14 @@
                         {{ data.item }}
                         </v-chip>
                     </template>
-                    <!--
-                    <template v-slot:append-outer>
-                        <v-icon @click="search" large color="green">mdi-magnify</v-icon>
-                    </template>
-                    -->
                 </v-combobox> 
-<!--
-                    <v-text-field
-                        v-model="search"
-                        solo
-                        rounded
-                        append-icon="mdi-magnify"
-                        placeholder="Escribe aquí"
-                        outlined
-                    ></v-text-field>
-
-                    <v-select
-                        v-model="select_comuna"
-                        :items="ubicaciones"
-                        item-text="comuna"
-                        item-value="abbr"
-                        menu-props="auto"
-                        hint="Selecciona tu comuna"
-                        persistent-hint
-                        :prepend-icon="!this.mobile ? 'mdi-map-marker' : ''"
-                        dense
-                        solo
-                        size="1px"
-                        @input="setearComuna"
-                    ></v-select>
--->
-
             </v-col>
             <v-col cols="12" sm="2" />
         </v-row>
         <v-row>
 
             <v-col class="text-center" cols="12">
-
-
-                <v-btn rounded color="green" dark large @click="search"> 
+                <v-btn rounded color="green" dark large @click="search()"> 
                     <v-icon>mdi-magnify</v-icon><div style="padding-left: 15px" /><span class="mr-2">Buscar</span>
                 </v-btn>
 
@@ -93,24 +60,20 @@ import { mapState, mapActions } from 'vuex'
 
 export default {
     props: ['mobile'],
+    data () {
+        return {
+            profesiones_Select: []
+        }
+    },
     methods: {
-        ...mapActions(['setearProfesionSeleccionada']),
+        ...mapActions(['setProfesionales_select']),
         search(){
+            this.setProfesionales_select(this.profesiones_Select)
             this.$router.push({name: 'profesionales'})
         },
     },
     computed: {
-        ...mapState(['profesiones','select_prof']),
-        select_prof: {
-            /* REVISAR!!!!!!!
-            get: function () {
-                return this.store.state.message
-            },
-            */
-            set: function(val){
-                this.setearProfesionSeleccionada(val)
-            }
-        }
+        ...mapState(['profesiones'])
     }
 }
 </script>

@@ -11,7 +11,7 @@
         </v-col>
         <v-col cols="12" sm="8">
           <v-combobox
-            v-model="select_prof"
+            v-model="profesiones_Select"
             :items="profesiones"
             multiple
             outlined
@@ -89,19 +89,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['profesiones','select_prof']),
-    /*
-    select_prof: {
-        /* REVISAR!!!!!!!
-        get: function () {
-            return this.store.state.message
-        },
-        
-        set: function(val){
-            this.setearProfesionSeleccionada(val)
-        }
-    }
-    */
+    ...mapState(['profesiones','profesiones_Select']),
   }
 } 
 </script>

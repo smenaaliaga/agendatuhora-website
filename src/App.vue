@@ -9,6 +9,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   import Toolbar from './components/Toolbar';
   import Footer from './components/Footer';
   export default {
@@ -27,12 +29,19 @@
     },
     created() {
         window.addEventListener('resize', this.handleResize);
-        this.handleResize();
+        this.handleResize()
+
+        // VARIABLES DE AMBIENTE
+        this.getProfesionales()
+        this.getProfesiones()
+        this.getUbicaciones()
     },
     destroyed() {
         window.removeEventListener('resize', this.handleResize);
     },
     methods: {
+      // CREACION DE LOS SELECTORES PROFESIONALES
+      ...mapActions(['getProfesionales','getProfesiones','getUbicaciones']),
       handleResize() {
           this.window.width = window.innerWidth;
           this.window.height = window.innerHeight;
@@ -45,7 +54,7 @@
           this.mobile = false
         }
       }
-    }
+    },
   };
 </script>
 

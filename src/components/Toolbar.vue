@@ -5,11 +5,10 @@
     <v-toolbar height="72px" dark color="#007C92" :elevation="10">
 
       <!-- TITULO TOOLBAR @click="backHome()" -->
-
       <v-btn class="icon mx-2" text fab @click="backHome()" color="grey">
         <icon-base width="140" height="140" icon-name="SEMID"><icon-Semid /></icon-base>
       </v-btn>
-      <icon-base width="120" height="120" icon-name="SEMID"><icon-SemidLetra /></icon-base>
+      <icon-base width="120" height="120" @click="backHome()" icon-name="SEMID"><icon-SemidLetra /></icon-base>
       
       <!-- FIN: TITULO TOOLBAR -->
 

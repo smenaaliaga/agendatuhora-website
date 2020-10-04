@@ -155,7 +155,6 @@ export default {
         }
     },
     created(){
-
         this.getProfesional(this.id)
 
         // FECHAS

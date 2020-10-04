@@ -10,36 +10,21 @@ export const store = new Vuex.Store({
         storage: window.sessionStorage,
     })],
     state: {
-        select_comuna: { comuna: 'Viña del Mar', abbr: 'VDM' },
-        ubicaciones: [
-            { comuna: 'Viña del Mar', abbr: 'VDM' },
-            { comuna: 'Reñaca', abbr: 'RÑC' },
-            { comuna: 'Con Con', abbr: 'CNCN' },        
-            { comuna: 'Quilpué', abbr: 'QLP' },
-            { comuna: 'Villa Alemana', abbr: 'VLN' },
-        ],
-        select_prof: null,
-        profesiones: [
-            { header: 'También buscar por el nombre del profesional' },
-            'Kinesiología',
-            'Medicina',
-            'Enfermería',
-            'Técnico en enfermería',
-            'Psicología',
-            'Nutrición',
-            'Fonoaudiología'
-        ],
+        // VARIABLES DE AMBIENTES
+        ubicaciones: {},
+        profesiones: [],
+        // VARIABLES SELECCIONADAS
+        profesiones_select: [],
+        profesionales_select: [],
         // Dialogs
         login: false,
-        // Loading
-        loading: true,
         // Usuarios
         usuario: null,
         datosUsuario: { uid: '', email: '', telefono: '', nombre: '', comuna: '',  direccion: '' },
         error: null,
         // Profesionales
         profesionales: [],
-        profesional: { id: '', nombre: '', apellido: '', profesion: '', comuna: '', avatar: '', bio: '', dias_disponibles: '', hora_inicio: '', hora_fin: ''            }
+        profesional: {}
     },
     mutations: {
         // Mutaciones Comuna Seleccionada
@@ -83,6 +68,20 @@ export const store = new Vuex.Store({
         setLoading(state, payload){
             state.loading = payload
         },
+        // Mutaciones Variables de Ambiente
+        setProfesiones(state, payload){
+            state.profesiones = payload
+        },
+        setUbicaciones(state, payload){
+            state.ubicaciones = payload
+        },
+        // Mutaciones Variables Seleccionadas
+        setProfesiones_Select(state, payload){
+            state.profesiones_select = payload
+        },
+        setProfesionales_select(state, payload){
+            state.profesionales_select = payload
+        },
         aux(){}, // Void auxiliar
     },
     actions: {
@@ -103,38 +102,23 @@ export const store = new Vuex.Store({
         //
         // PROFESION SELECCIONADA
         //
-        setearProfesionSeleccionada({commit}, arreglo_de_buscados){
-            commit('setSelect_profesion', arreglo_de_buscados)
-
-            const profesionales = []
-
-            if(arreglo_de_buscados.length == 0){
-
-                db.collection('profesionales').get()
-                .then(res => {
-                    res.forEach(doc =>{
-                        let profesional = doc.data()
-                        profesional.id = doc.id
-                        profesionales.push(profesional)
-                    })
-                    commit('setProfesionales', profesionales)
-                })
-
-            }else{
-
-                arreglo_de_buscados.forEach(element => {
-                    db.collection('profesionales').where('profesion', '==',element).get()
-                    .then(res => {
-                        res.forEach(doc =>{
-                            let profesional = doc.data()
-                            profesional.id = doc.id
-                            profesionales.push(profesional)
-                        })
-                        commit('setProfesionales', profesionales)
-                    })
-                })
-
+        setProfesionales_select({commit}, palabras_buscadas){
+            let profesionales_select = []
+            for(let i=0; i < this.state.profesionales.length; i++){
+                for(let j=0; j < palabras_buscadas.length; j++){
+                    if(this.state.profesionales[i].profesion.match(palabras_buscadas[j])
+                    || this.state.profesionales[i].nombre.match(palabras_buscadas[j])
+                    || this.state.profesionales[i].apellido.match(palabras_buscadas[j])){
+                        profesionales_select.push(this.state.profesionales[i]);
+                    }
+                }
             }
+            function onlyUnique(value, index, self) { 
+                return self.indexOf(value) === index;
+            }
+            if(profesionales_select.length > -1)
+                profesionales_select = profesionales_select.filter(onlyUnique)
+            commit('setProfesionales_select', profesionales_select)
         },
         //
         // USUARIOS
@@ -242,25 +226,11 @@ export const store = new Vuex.Store({
             })
         },
         getProfesional({commit}, idProfesional) {
-            db.collection('profesionales').doc(idProfesional).get()
-            .then(doc => {
-                let profesional = doc.data()
-                profesional.id =  doc.id
-                commit('setProfesional', profesional)
-            })
-        },
-        getProfesionalesPorComunaSearch({commit}, search) {
-            const profesionales = []
-            db.collection('profesionales').where('comuna', '==',this.state.select_comuna.comuna)
-            .where('nombre', 'like', search).get()
-            .then(res => {
-                res.forEach(doc =>{
-                    let profesional = doc.data()
-                    profesional.id = doc.id
-                    profesionales.push(profesional)
-                })
-                commit('setProfesionales', profesionales)
-            })
+            for(let i=0; i < this.state.profesionales.length; i++){
+                if(this.state.profesionales[i].id === idProfesional){
+                    commit('setProfesional', this.state.profesionales[i])
+                }
+            }
         },
         editProfesional({commit}, profesional){
             db.collection('profesionales').doc(profesional.id).update({
@@ -328,7 +298,30 @@ export const store = new Vuex.Store({
         setearLoading({commit}){           
             commit('setLoading', true)
             setTimeout(() => commit('setLoading', false), 1800)
-        }
+        },
+        //
+        // VARIABLES DE AMBIENTE
+        //
+        getProfesiones({commit}) {
+            db.collection('selecciones').doc('nbCVBx2SBMr7mCjlnqhE').get()
+            .then(res => {
+                commit('setProfesiones', res.data().profesiones)
+            })
+        },
+        getUbicaciones({commit}) {
+            let ubicaciones = []
+            db.collection('selecciones').doc('0TEQRfHc4Ri5OrE06Uln').get()
+            .then(res => {
+                ubicaciones = res.data().ubicaciones
+                commit('setUbicaciones', ubicaciones)
+            })
+        },
+        //
+        // VARIABLES SELECCIONADAS
+        //
+        setProfesiones_Select({commit}, profesiones_select){
+            commit('setProfesiones_Select', profesiones_select)
+        },
     },
     getters: {
         existeUsuario(state){
