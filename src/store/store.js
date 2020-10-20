@@ -20,11 +20,15 @@ export const store = new Vuex.Store({
         login: false,
         // Usuarios
         usuario: null,
-        datosUsuario: { uid: '', email: '', telefono: '', nombre: '', comuna: '',  direccion: '' },
+        datosUsuario: null,
         error: null,
         // Profesionales
         profesionales: [],
-        profesional: {}
+        profesional: {},
+        // Variables de Ambiente
+        sesion_iniciada: false,
+        sesion_cerrada: false,
+        sesion: false
     },
     mutations: {
         // Mutaciones Comuna Seleccionada
@@ -38,6 +42,16 @@ export const store = new Vuex.Store({
         // Mutaciones Login
         setLogin(state, payload){
             state.login = payload
+        },
+        // Mutaciones Variables de ambientes
+        set_sesion_iniciada(state, payload){
+            state.sesion_iniciada = payload
+        },
+        set_sesion_cerrada(state, payload){
+            state.sesion_cerrada = payload
+        },
+        set_sesion(state, payload){
+            state.sesion = payload
         },
         // Mutaciones de Usuarios
         setUsuario(state, usuario){
@@ -88,6 +102,7 @@ export const store = new Vuex.Store({
         //
         // COMUNA SELECCIONADA
         //
+        /*
         setearComunaSeleccionada({commit}, abbr){
             var resultObject = null
 
@@ -99,6 +114,7 @@ export const store = new Vuex.Store({
             
             commit('setSelect_comuna', resultObject)
         },
+        */
         //
         // PROFESION SELECCIONADA
         //
@@ -121,10 +137,19 @@ export const store = new Vuex.Store({
             commit('setProfesionales_select', profesionales_select)
         },
         //
-        // USUARIOS
+        // VARIABLES DE AMBIENTE
         //
         setearLogin({commit}, bool){
             commit('setLogin', bool)
+        },
+        setear_sesion_iniciada({commit}, bool){
+            commit('set_sesion_iniciada', bool)
+        },
+        setear_sesion_cerrada({commit}, bool){
+            commit('set_sesion_cerrada', bool)
+        },
+        setear_sesion({commit}, bool){
+            commit('set_sesion', bool)
         },
         //
         // USUARIOS
@@ -178,12 +203,12 @@ export const store = new Vuex.Store({
             .then(res => {
                 db.collection('usuarios').where("uid", "==", res.user.uid).get()
                 .then(querySnapshot => {
-                    querySnapshot.forEach(function(doc) {
+                    querySnapshot.forEach( function(doc) {
                         let user = doc.data()
                         user.id =  doc.id
                         const usuario = {
-                            uid: res.user.uid,
-                            email: res.user.email,
+                            // uid: res.user.uid,
+                            // email: res.user.email,
                             telefono: user.telefono,
                             nombre: user.nombre,
                             comuna: user.comuna,
@@ -204,7 +229,7 @@ export const store = new Vuex.Store({
         cerrarSesion({commit}){
             auth.signOut()
             sessionStorage.clear()
-            commit('setDatosUsuario', { uid: '', email: '', telefono: '', nombre: '', comuna: '',  direccion: '' })
+            commit('setDatosUsuario', null)
         },
         detectarUsuario({commit}, usuario){
             commit('setUsuario', usuario)
@@ -325,11 +350,7 @@ export const store = new Vuex.Store({
     },
     getters: {
         existeUsuario(state){
-            if(state.usuario === null){
-                return false
-            }else{
-                return true
-            }
+            return state.sesion
         }
     }
 });

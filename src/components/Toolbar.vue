@@ -209,6 +209,34 @@
   
   <Sesion />
 
+  <v-snackbar v-model="sesion_iniciada" @input="setear_sesion_iniciada(false)" timeout="5000">
+      Sesión iniciada
+    <template v-slot:action="{ attrs }">
+      <v-btn
+        color="blue"
+        text
+        v-bind="attrs"
+        @click="setear_sesion_iniciada(false)"
+      >
+      Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
+
+  <v-snackbar v-model="sesion_cerrada" @input="setear_sesion_cerrada(false)" timeout="5000">
+      Sesión cerrada
+    <template v-slot:action="{ attrs }">
+      <v-btn
+        color="red"
+        text
+        v-bind="attrs"
+        @click="setear_sesion_cerrada(false)"
+      >
+      Cerrar
+      </v-btn>
+    </template>
+  </v-snackbar>
+
 </div>
 </template>
 
@@ -235,7 +263,7 @@
       return {
         // Dialogs
         dialog: false,
-        contacto: false
+        contacto: false,
       }
     },
     sesion(){
@@ -246,7 +274,7 @@
       }
     },
     methods: {
-      ...mapActions(['cerrarSesion','setearLogin','setearComunaSeleccionada','getProfesionalesPorComuna']),
+      ...mapActions(['cerrarSesion','setearLogin','setear_sesion_iniciada','setear_sesion_cerrada']),
       backHome() {
         if(this.$route.name == "home") {
           location.reload()
@@ -267,7 +295,7 @@
       }
     },
     computed: {
-      ...mapState(['ubicaciones','select_comuna','login']),
+      ...mapState(['ubicaciones','select_comuna','sesion_iniciada','sesion_cerrada']),
       ...mapGetters(['existeUsuario'])
     },
   }

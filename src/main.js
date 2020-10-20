@@ -8,9 +8,9 @@ import { auth } from './firebase'
 
 auth.onAuthStateChanged(user => {
   if(user){
-    store.dispatch('detectarUsuario', {email: user.email, uid: user.uid})
+    store.dispatch('setear_sesion', true)
   }else{
-    store.dispatch('detectarUsuario', user)
+    store.dispatch('setear_sesion', false)
   }
 });
 

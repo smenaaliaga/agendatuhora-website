@@ -37,6 +37,9 @@
                   @click:append="show1 = !show1"
                 ></v-text-field>
               </v-container>
+              <div v-if="notuser">
+                <p class="red--text text--lighten-1">Datos de sesión incorrecto</p>
+              </div>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <span class="text">
@@ -91,7 +94,7 @@
 
               <v-text-field
                 v-model="direccion"
-                label="Dirección (Ej. Alvarez 32 piso 3232)"
+                label="Dirección (Ej. Alvarez 1234 piso 111)"
                 required
               ></v-text-field>
 
@@ -158,7 +161,6 @@
             </form>
           </v-tab-item>
           <!-- FIN: REGISTRO -->
-
         </v-tabs>
       </v-card-text>
     </v-card>
@@ -176,9 +178,9 @@ export default {
   data(){
     return{
       // Inicio Sesion
-      show1: false,
       password: '',
       email: '',
+      error_sesion: false,
       // Registro
       nombre: '',
       direccion: '',
@@ -189,6 +191,7 @@ export default {
         required: value => !!value || 'Requerido.',
         min: v => v.length >= 6 || 'Min 6 caracteres',
       },
+      
     }
   },
   props: ['mobile'],
@@ -203,7 +206,6 @@ export default {
       },
     },
   },
-  
   sesion(){
     if(this.$route.name == "sesion") {
       location.reload()
@@ -212,7 +214,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['login','ubicaciones','select']),
+    ...mapState(['login','ubicaciones','select','sesion']),
     ...mapGetters(['existeUsuario']),
     emailErrors () {
       const errors = []
@@ -223,13 +225,16 @@ export default {
     },
     desactivar(){
       return this.password_registro_1 === this.password_registro_2 && this.password_registro_1.trim() !== ''
-    }
+    },
+    notuser(){
+      return this.error_sesion
+    },
   },
   methods: {
-    ...mapActions(['crearUsuario', 'ingresoUsuario', 'cerrarSesion','setearLogin']),
+    ...mapActions(['crearUsuario','ingresoUsuario','setearLogin','setear_sesion_iniciada','setear_sesion_cerrada','setear_cuenta_creada']),
     // Metodo creación
     crear(){
-    this.crearUsuario({email: this.email, password: this.password_registro_1, telefono: this.telefono,
+      this.crearUsuario({email: this.email, password: this.password_registro_1, telefono: this.telefono,
                         nombre: this.nombre, direccion: this.direccion, comuna: this.select})
       .then(() => {
         this.setearLogin(false)
@@ -245,10 +250,25 @@ export default {
     // Metodo ingreso
     ingresar(){
       this.ingresoUsuario({email: this.email, password: this.password})
-      .then(() => {
-        this.setearLogin(false)
-      })
+      setTimeout(() => {
+        this.error_sesion = true
+      }, 1500);
     },
+  },
+  watch: {
+    sesion () {
+      if(this.existeUsuario) {
+        this.setearLogin(false)
+        this.email = null
+        this.password = null
+        this.error_sesion = false
+        this.setear_sesion_iniciada(true)
+      }else{
+        this.password = null
+        this.error_sesion = false
+        this.setear_sesion_cerrada(true)
+      }
+    }
   }
 }
 </script>
